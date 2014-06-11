@@ -1,0 +1,769 @@
+{"af": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "ak": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "n > 1",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 0..1 @integer 0, 1 @decimal 0.0, 1.0, 0.00, 1.00, 0.000, 1.000, 0.0000, 1.0000",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.1~0.9, 1.1~1.7, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "am": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n > 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0 or n = 1 @integer 0, 1 @decimal 0.0~1.0, 0.00~0.04",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 1.1~2.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "ar": {
+    "MozPluralCount": "6",
+    "MozPluralRule": "n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5",
+    "CLDRPlurals": {
+        "pluralRule-count-zero": "n = 0 @integer 0 @decimal 0.0, 0.00, 0.000, 0.0000",
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-two": "n = 2 @integer 2 @decimal 2.0, 2.00, 2.000, 2.0000",
+        "pluralRule-count-few": "n % 100 = 3..10 @integer 3~10, 103~110, 1003, \u2026 @decimal 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 103.0, 1003.0, \u2026",
+        "pluralRule-count-many": "n % 100 = 11..99 @integer 11~26, 111, 1011, \u2026 @decimal 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 111.0, 1011.0, \u2026",
+        "pluralRule-count-other": " @integer 100~102, 200~202, 300~302, 400~402, 500~502, 600, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.1~0.9, 1.1~1.7, 10.1, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 6
+}, "as": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": null,
+    "CLDRPluralCount": null
+}, "ast": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "az": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "bal": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": null,
+    "CLDRPluralCount": null
+}, "be": {
+    "MozPluralCount": "4",
+    "MozPluralRule": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n % 10 = 1 and n % 100 != 11 @integer 1, 21, 31, 41, 51, 61, 71, 81, 101, 1001, \u2026 @decimal 1.0, 21.0, 31.0, 41.0, 51.0, 61.0, 71.0, 81.0, 101.0, 1001.0, \u2026",
+        "pluralRule-count-few": "n % 10 = 2..4 and n % 100 != 12..14 @integer 2~4, 22~24, 32~34, 42~44, 52~54, 62, 102, 1002, \u2026 @decimal 2.0, 3.0, 4.0, 22.0, 23.0, 24.0, 32.0, 33.0, 102.0, 1002.0, \u2026",
+        "pluralRule-count-many": "n % 10 = 0 or n % 10 = 5..9 or n % 100 = 11..14 @integer 0, 5~19, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026",
+        "pluralRule-count-other": "   @decimal 0.1~0.9, 1.1~1.7, 10.1, 100.1, 1000.1, \u2026"
+    },
+    "CLDRPluralCount": 4
+}, "bg": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "bn": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0 or n = 1 @integer 0, 1 @decimal 0.0~1.0, 0.00~0.04",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 1.1~2.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "bn-BD": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0 or n = 1 @integer 0, 1 @decimal 0.0~1.0, 0.00~0.04",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 1.1~2.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "bn-IN": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0 or n = 1 @integer 0, 1 @decimal 0.0~1.0, 0.00~0.04",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 1.1~2.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "bn_IN": {
+    "MozPluralCount": "0",
+    "MozPluralRule": "",
+    "CLDRPlurals": null,
+    "CLDRPluralCount": null
+}, "br": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n > 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n % 10 = 1 and n % 100 != 11,71,91 @integer 1, 21, 31, 41, 51, 61, 81, 101, 1001, \u2026 @decimal 1.0, 21.0, 31.0, 41.0, 51.0, 61.0, 81.0, 101.0, 1001.0, \u2026",
+        "pluralRule-count-two": "n % 10 = 2 and n % 100 != 12,72,92 @integer 2, 22, 32, 42, 52, 62, 82, 102, 1002, \u2026 @decimal 2.0, 22.0, 32.0, 42.0, 52.0, 62.0, 82.0, 102.0, 1002.0, \u2026",
+        "pluralRule-count-few": "n % 10 = 3..4,9 and n % 100 != 10..19,70..79,90..99 @integer 3, 4, 9, 23, 24, 29, 33, 34, 39, 43, 44, 49, 103, 1003, \u2026 @decimal 3.0, 4.0, 9.0, 23.0, 24.0, 29.0, 33.0, 34.0, 103.0, 1003.0, \u2026",
+        "pluralRule-count-many": "n != 0 and n % 1000000 = 0 @integer 1000000, \u2026 @decimal 1000000.0, 1000000.00, 1000000.000, \u2026",
+        "pluralRule-count-other": " @integer 0, 5~8, 10~20, 100, 1000, 10000, 100000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, \u2026"
+    },
+    "CLDRPluralCount": 5
+}, "bs": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "v = 0 and i % 10 = 1 and i % 100 != 11 or f % 10 = 1 and f % 100 != 11 @integer 1, 21, 31, 41, 51, 61, 71, 81, 101, 1001, \u2026 @decimal 0.1, 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 10.1, 100.1, 1000.1, \u2026",
+        "pluralRule-count-few": "v = 0 and i % 10 = 2..4 and i % 100 != 12..14 or f % 10 = 2..4 and f % 100 != 12..14 @integer 2~4, 22~24, 32~34, 42~44, 52~54, 62, 102, 1002, \u2026 @decimal 0.2~0.4, 1.2~1.4, 2.2~2.4, 3.2~3.4, 4.2~4.4, 5.2, 10.2, 100.2, 1000.2, \u2026",
+        "pluralRule-count-other": " @integer 0, 5~19, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0, 0.5~1.0, 1.5~2.0, 2.5~2.7, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 3
+}, "ca": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "cs": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-few": "i = 2..4 and v = 0 @integer 2~4",
+        "pluralRule-count-many": "v != 0   @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026",
+        "pluralRule-count-other": " @integer 0, 5~19, 100, 1000, 10000, 100000, 1000000, \u2026"
+    },
+    "CLDRPluralCount": 4
+}, "cy": {
+    "MozPluralCount": "4",
+    "MozPluralRule": "(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3",
+    "CLDRPlurals": {
+        "pluralRule-count-zero": "n = 0 @integer 0 @decimal 0.0, 0.00, 0.000, 0.0000",
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-two": "n = 2 @integer 2 @decimal 2.0, 2.00, 2.000, 2.0000",
+        "pluralRule-count-few": "n = 3 @integer 3 @decimal 3.0, 3.00, 3.000, 3.0000",
+        "pluralRule-count-many": "n = 6 @integer 6 @decimal 6.0, 6.00, 6.000, 6.0000",
+        "pluralRule-count-other": " @integer 4, 5, 7~20, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.1~0.9, 1.1~1.7, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 6
+}, "da": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 or t != 0 and i = 0,1 @integer 1 @decimal 0.1~1.6",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0, 2.0~3.4, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "de": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "el": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "en-GB": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "en-US": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "en-ZA": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "eo": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "es-AR": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "es-CL": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "es-ES": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "es-MX": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "et": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "eu": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "fa": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0 or n = 1 @integer 0, 1 @decimal 0.0~1.0, 0.00~0.04",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 1.1~2.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "fi": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "fr": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n > 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0,1 @integer 0, 1 @decimal 0.0~1.5",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 2.0~3.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "fy-NL": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "ga-IE": {
+    "MozPluralCount": "5",
+    "MozPluralRule": "(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-two": "n = 2 @integer 2 @decimal 2.0, 2.00, 2.000, 2.0000",
+        "pluralRule-count-few": "n = 3..6 @integer 3~6 @decimal 3.0, 4.0, 5.0, 6.0, 3.00, 4.00, 5.00, 6.00, 3.000, 4.000, 5.000, 6.000, 3.0000, 4.0000, 5.0000, 6.0000",
+        "pluralRule-count-many": "n = 7..10 @integer 7~10 @decimal 7.0, 8.0, 9.0, 10.0, 7.00, 8.00, 9.00, 10.00, 7.000, 8.000, 9.000, 10.000, 7.0000, 8.0000, 9.0000, 10.0000",
+        "pluralRule-count-other": " @integer 0, 11~25, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.1, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "gd": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "n < 2 ? 0 : n == 2 ? 1 : 2",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1,11 @integer 1, 11 @decimal 1.0, 11.0, 1.00, 11.00, 1.000, 11.000, 1.0000",
+        "pluralRule-count-two": "n = 2,12 @integer 2, 12 @decimal 2.0, 12.0, 2.00, 12.00, 2.000, 12.000, 2.0000",
+        "pluralRule-count-few": "n = 3..10,13..19 @integer 3~10, 13~19 @decimal 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 3.00",
+        "pluralRule-count-other": " @integer 0, 20~34, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.1, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 4
+}, "gl": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "gu-IN": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0 or n = 1 @integer 0, 1 @decimal 0.0~1.0, 0.00~0.04",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 1.1~2.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "he": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-two": "i = 2 and v = 0 @integer 2",
+        "pluralRule-count-many": "v = 0 and n != 0..10 and n % 10 = 0 @integer 20, 30, 40, 50, 60, 70, 80, 90, 100, 1000, 10000, 100000, 1000000, \u2026",
+        "pluralRule-count-other": " @integer 0, 3~17, 101, 1001, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 4
+}, "hi-IN": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0 or n = 1 @integer 0, 1 @decimal 0.0~1.0, 0.00~0.04",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 1.1~2.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "hr": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "v = 0 and i % 10 = 1 and i % 100 != 11 or f % 10 = 1 and f % 100 != 11 @integer 1, 21, 31, 41, 51, 61, 71, 81, 101, 1001, \u2026 @decimal 0.1, 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 10.1, 100.1, 1000.1, \u2026",
+        "pluralRule-count-few": "v = 0 and i % 10 = 2..4 and i % 100 != 12..14 or f % 10 = 2..4 and f % 100 != 12..14 @integer 2~4, 22~24, 32~34, 42~44, 52~54, 62, 102, 1002, \u2026 @decimal 0.2~0.4, 1.2~1.4, 2.2~2.4, 3.2~3.4, 4.2~4.4, 5.2, 10.2, 100.2, 1000.2, \u2026",
+        "pluralRule-count-other": " @integer 0, 5~19, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0, 0.5~1.0, 1.5~2.0, 2.5~2.7, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 3
+}, "hsb": {
+    "MozPluralCount": "4",
+    "MozPluralRule": "(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3)",
+    "CLDRPlurals": null,
+    "CLDRPluralCount": null
+}, "hu": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "hy-AM": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0,1 @integer 0, 1 @decimal 0.0~1.5",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 2.0~3.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "id": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-other": " @integer 0~15, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 1
+}, "is": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "t = 0 and i % 10 = 1 and i % 100 != 11 or t != 0 @integer 1, 21, 31, 41, 51, 61, 71, 81, 101, 1001, \u2026 @decimal 0.1~1.6, 10.1, 100.1, 1000.1, \u2026",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "it": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "ja": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-other": " @integer 0~15, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 1
+}, "ka": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "kk": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "km": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-other": " @integer 0~15, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 1
+}, "kn": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0 or n = 1 @integer 0, 1 @decimal 0.0~1.0, 0.00~0.04",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 1.1~2.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "ko": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-other": " @integer 0~15, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 1
+}, "ku": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "lg": {
+    "MozPluralCount": "0",
+    "MozPluralRule": "",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "lt": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n % 10 = 1 and n % 100 != 11..19 @integer 1, 21, 31, 41, 51, 61, 71, 81, 101, 1001, \u2026 @decimal 1.0, 21.0, 31.0, 41.0, 51.0, 61.0, 71.0, 81.0, 101.0, 1001.0, \u2026",
+        "pluralRule-count-few": "n % 10 = 2..9 and n % 100 != 11..19 @integer 2~9, 22~29, 102, 1002, \u2026 @decimal 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 22.0, 102.0, 1002.0, \u2026",
+        "pluralRule-count-many": "f != 0   @decimal 0.1~0.9, 1.1~1.7, 10.1, 100.1, 1000.1, \u2026",
+        "pluralRule-count-other": " @integer 0, 10~20, 30, 40, 50, 60, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 4
+}, "lv": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2)",
+    "CLDRPlurals": {
+        "pluralRule-count-zero": "n % 10 = 0 or n % 100 = 11..19 or v = 2 and f % 100 = 11..19 @integer 0, 10~20, 30, 40, 50, 60, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026",
+        "pluralRule-count-one": "n % 10 = 1 and n % 100 != 11 or v = 2 and f % 10 = 1 and f % 100 != 11 or v != 2 and f % 10 = 1 @integer 1, 21, 31, 41, 51, 61, 71, 81, 101, 1001, \u2026 @decimal 0.1, 1.0, 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 10.1, 100.1, 1000.1, \u2026",
+        "pluralRule-count-other": " @integer 2~9, 22~29, 102, 1002, \u2026 @decimal 0.2~0.9, 1.2~1.9, 10.2, 100.2, 1000.2, \u2026"
+    },
+    "CLDRPluralCount": 3
+}, "mai": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": null,
+    "CLDRPluralCount": null
+}, "mk": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n % 10 == 1 && n % 100 != 11) ? 0 : 1",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "v = 0 and i % 10 = 1 or f % 10 = 1 @integer 1, 11, 21, 31, 41, 51, 61, 71, 101, 1001, \u2026 @decimal 0.1, 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 10.1, 100.1, 1000.1, \u2026",
+        "pluralRule-count-other": " @integer 0, 2~10, 12~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0, 0.2~1.0, 1.2~1.7, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "ml": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "mn": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "mr": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0 or n = 1 @integer 0, 1 @decimal 0.0~1.0, 0.00~0.04",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 1.1~2.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "ms": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-other": " @integer 0~15, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 1
+}, "nb-NO": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "nl": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "nn-NO": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "nso": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n > 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 0..1 @integer 0, 1 @decimal 0.0, 1.0, 0.00, 1.00, 0.000, 1.000, 0.0000, 1.0000",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.1~0.9, 1.1~1.7, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "oc": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n > 1)",
+    "CLDRPlurals": null,
+    "CLDRPluralCount": null
+}, "or": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "pa-IN": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 0..1 @integer 0, 1 @decimal 0.0, 1.0, 0.00, 1.00, 0.000, 1.000, 0.0000, 1.0000",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.1~0.9, 1.1~1.7, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "pl": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-few": "v = 0 and i % 10 = 2..4 and i % 100 != 12..14 @integer 2~4, 22~24, 32~34, 42~44, 52~54, 62, 102, 1002, \u2026",
+        "pluralRule-count-many": "v = 0 and i != 1 and i % 10 = 0..1 or v = 0 and i % 10 = 5..9 or v = 0 and i % 100 = 12..14 @integer 0, 5~19, 100, 1000, 10000, 100000, 1000000, \u2026",
+        "pluralRule-count-other": "   @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 4
+}, "pt-BR": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n > 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 or i = 0 and t = 1 @integer 1 @decimal 0.1, 0.01, 0.10, 0.001, 0.010, 0.100, 0.0001, 0.0010, 0.0100, 0.1000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0, 0.2~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "pt-PT": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 or i = 0 and t = 1 @integer 1 @decimal 0.1, 0.01, 0.10, 0.001, 0.010, 0.100, 0.0001, 0.0010, 0.0100, 0.1000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0, 0.2~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "rm": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "ro": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1))",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-few": "v != 0 or n = 0 or n != 1 and n % 100 = 1..19 @integer 0, 2~16, 101, 1001, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026",
+        "pluralRule-count-other": " @integer 20~35, 100, 1000, 10000, 100000, 1000000, \u2026"
+    },
+    "CLDRPluralCount": 3
+}, "ru": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "v = 0 and i % 10 = 1 and i % 100 != 11 @integer 1, 21, 31, 41, 51, 61, 71, 81, 101, 1001, \u2026",
+        "pluralRule-count-many": "v = 0 and i % 10 = 0 or v = 0 and i % 10 = 5..9 or v = 0 and i % 100 = 11..14 @integer 0, 5~19, 100, 1000, 10000, 100000, 1000000, \u2026",
+        "pluralRule-count-other": " @integer 2~4, 22~24, 32~34, 42~44, 52~54, 62, 102, 1002, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 3
+}, "si": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 0,1 or i = 0 and f = 1 @integer 0, 1 @decimal 0.0, 0.1, 1.0, 0.00, 0.01, 1.00, 0.000, 0.001, 1.000, 0.0000, 0.0001, 1.0000",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.2~0.9, 1.1~1.8, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "sk": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-few": "i = 2..4 and v = 0 @integer 2~4",
+        "pluralRule-count-many": "v != 0   @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026",
+        "pluralRule-count-other": " @integer 0, 5~19, 100, 1000, 10000, 100000, 1000000, \u2026"
+    },
+    "CLDRPluralCount": 4
+}, "sl": {
+    "MozPluralCount": "4",
+    "MozPluralRule": "(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "v = 0 and i % 100 = 1 @integer 1, 101, 201, 301, 401, 501, 601, 701, 1001, \u2026",
+        "pluralRule-count-two": "v = 0 and i % 100 = 2 @integer 2, 102, 202, 302, 402, 502, 602, 702, 1002, \u2026",
+        "pluralRule-count-few": "v = 0 and i % 100 = 3..4 or v != 0 @integer 3, 4, 103, 104, 203, 204, 303, 304, 403, 404, 503, 504, 603, 604, 703, 704, 1003, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026",
+        "pluralRule-count-other": " @integer 0, 5~19, 100, 1000, 10000, 100000, 1000000, \u2026"
+    },
+    "CLDRPluralCount": 4
+}, "son": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": null,
+    "CLDRPluralCount": null
+}, "sq": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "sr": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "v = 0 and i % 10 = 1 and i % 100 != 11 or f % 10 = 1 and f % 100 != 11 @integer 1, 21, 31, 41, 51, 61, 71, 81, 101, 1001, \u2026 @decimal 0.1, 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 10.1, 100.1, 1000.1, \u2026",
+        "pluralRule-count-few": "v = 0 and i % 10 = 2..4 and i % 100 != 12..14 or f % 10 = 2..4 and f % 100 != 12..14 @integer 2~4, 22~24, 32~34, 42~44, 52~54, 62, 102, 1002, \u2026 @decimal 0.2~0.4, 1.2~1.4, 2.2~2.4, 3.2~3.4, 4.2~4.4, 5.2, 10.2, 100.2, 1000.2, \u2026",
+        "pluralRule-count-other": " @integer 0, 5~19, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0, 0.5~1.0, 1.5~2.0, 2.5~2.7, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 3
+}, "sv-SE": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 1 and v = 0 @integer 1",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "ta": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "ta-LK": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "te": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "th": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-other": " @integer 0~15, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 1
+}, "tr": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "n = 1 @integer 1 @decimal 1.0, 1.00, 1.000, 1.0000",
+        "pluralRule-count-other": " @integer 0, 2~16, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~0.9, 1.1~1.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}, "uk": {
+    "MozPluralCount": "3",
+    "MozPluralRule": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "v = 0 and i % 10 = 1 and i % 100 != 11 @integer 1, 21, 31, 41, 51, 61, 71, 81, 101, 1001, \u2026",
+        "pluralRule-count-few": "v = 0 and i % 10 = 2..4 and i % 100 != 12..14 @integer 2~4, 22~24, 32~34, 42~44, 52~54, 62, 102, 1002, \u2026",
+        "pluralRule-count-many": "v = 0 and i % 10 = 0 or v = 0 and i % 10 = 5..9 or v = 0 and i % 100 = 11..14 @integer 0, 5~19, 100, 1000, 10000, 100000, 1000000, \u2026",
+        "pluralRule-count-other": "   @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 4
+}, "vi": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-other": " @integer 0~15, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 1
+}, "zh-CN": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-other": " @integer 0~15, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "zh-TW": {
+    "MozPluralCount": "1",
+    "MozPluralRule": "0",
+    "CLDRPlurals": {
+        "pluralRule-count-other": " @integer 0~15, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 0.0~1.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 0
+}, "zu": {
+    "MozPluralCount": "2",
+    "MozPluralRule": "(n != 1)",
+    "CLDRPlurals": {
+        "pluralRule-count-one": "i = 0 or n = 1 @integer 0, 1 @decimal 0.0~1.0, 0.00~0.04",
+        "pluralRule-count-other": " @integer 2~17, 100, 1000, 10000, 100000, 1000000, \u2026 @decimal 1.1~2.6, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, \u2026"
+    },
+    "CLDRPluralCount": 2
+}}

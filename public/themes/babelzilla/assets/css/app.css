@@ -1,0 +1,563 @@
+/**
+ * More polished style for ViewGit
+ *
+ * @author John Lawrence <mail@johnlawrence.net>
+ */
+
+a.tree_link {
+    padding-top: 16px;
+    height: 0px;
+    width: 22px;
+    overflow: hidden;
+    display: inline-block;
+    background: url('../images/silk/chart_organisation.png') no-repeat 50% 50%;
+}
+
+a.tar_link {
+    padding-top: 16px;
+    height: 0px;
+    width: 22px;
+    overflow: hidden;
+    display: inline-block;
+    background: url('../images/silk/page_white_compressed.png') no-repeat 50% 50%;
+}
+
+a.zip_link {
+    padding-top: 16px;
+    height: 0px;
+    width: 22px;
+    overflow: hidden;
+    display: inline-block;
+    background: url('../images/silk/page_white_zip.png') no-repeat 50% 50%;
+}
+
+a.cdiff_link {
+    padding-top: 16px;
+    height: 0px;
+    width: 22px;
+    overflow: hidden;
+    display: inline-block;
+    background: url('../images/silk/commit_diff.png') no-repeat 50% 50%;
+}
+
+a.patch_link {
+    padding-top: 16px;
+    height: 0px;
+    width: 22px;
+    overflow: hidden;
+    display: inline-block;
+    background: url('../images/silk/page_white_code_red.png') no-repeat 50% 50%;
+}
+
+table tbody tr:hover {
+    background-color: #e0ffe0;
+}
+
+.notices {
+    padding-left: 1em;
+    margin: 0;
+}
+
+.notices p {
+    margin: 0;
+    padding: 0;
+}
+
+.notices .error {
+    background-color: #f77;
+}
+
+.notices .info {
+    background-color: #ff7;
+}
+
+.notices .warning {
+    background-color: #fc7;
+}
+
+.nav {
+    font-size: 1.4em;
+    padding: 20px;
+    margin: 0;
+    background: #333 url('../images/viewgit.png') no-repeat 98% 50%;
+    border-bottom: 1px solid #000;
+    color: #eee;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #4d4;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+div#page_body {
+    margin: 10px 20px;
+}
+
+.pagenav {
+    margin-top: 0.3em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.pagenav a {
+    text-decoration: none;
+}
+
+.pagenav a:hover {
+    text-decoration: underline;
+}
+
+.pagenav .cur {
+    font-weight: bold;
+}
+
+.search {
+    display: inline;
+}
+
+.ad {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 80%;
+}
+
+span.head {
+    background-color: #090;
+    margin-left-left: 3px;
+}
+
+span.remote {
+    background-color: #faf;
+    border-right: 1px solid #909;
+    border-bottom: 1px solid #909;
+}
+
+span.tag {
+    background-color: #ffa;
+    border-right: 1px solid #990;
+    border-bottom: 1px solid #990;
+}
+
+/* summary template */
+
+table.shortlog th.date {
+    width: 15%;
+    white-space: pre;
+}
+
+table.shortlog th.author {
+    width: 15%;
+}
+
+table.heads th.date {
+    width: 15%;
+}
+
+/* commitdiff template */
+
+.commitmessage {
+    border: 1px solid #999;
+    background: #ffe;
+    padding: 0 0.5em;
+    margin: 0.5em;
+    font-size: 1.2em;
+}
+
+div.diff {
+    font-size: 1.2em;
+}
+
+.diff .add {
+    color: green;
+}
+
+.diff .del {
+    color: red;
+}
+
+.diff .pos {
+    color: purple;
+}
+
+.diff .etc {
+    color: #999;
+}
+
+/* tree template */
+table.tree th.perm {
+    width: 10%;
+}
+
+table.tree th.dl {
+    width: 10%;
+}
+
+table.tree .dir a.item_name {
+    padding-left: 20px;
+    background: url('../images/silk/folder.png') no-repeat 0 50%;
+}
+
+table.tree .blob a.item_name {
+    padding-left: 20px;
+    background: url('../images/silk/page_white_text.png') no-repeat 0 50%;
+}
+
+/* viewblob template */
+.file {
+    border: 1px solid #999;
+    background: #ddd;
+    padding: 0 0.5em;
+    margin: 0.5em;
+    font-size: 1.2em;
+}
+
+.diff {
+    background-color: lightgrey;
+}
+
+.diff pre {
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.repolink {
+    color: #c00;
+}
+
+.repolink a {
+    color: #c00;
+}
+
+.top-bar {
+
+}
+
+footer {
+    clear: both;
+    position: relative;
+    z-index: 10;
+    height: 3.5em;
+    margin-top: -4em !important;
+}
+
+footer p {
+    color: #FFF;
+}
+
+footer a {
+    color: #FFF;
+    border-top: snow;
+    border-bottom: snow;
+}
+
+.top-bar .name {
+    margin-top: 7px;
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.fullwidth {
+    width: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: initial;
+    background: linear-gradient(to top, #2C3E50, #2C3E50) repeat-x scroll 0 0 #2C3E50;
+}
+
+.top-bar {
+    height: 60px;
+    line-height: 60px;
+
+    background: linear-gradient(to bottom, #2C3E50, #2C3E50) repeat-x scroll 0 0 #2C3E50;
+    box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+    color: #FFFFFF;
+    margin-bottom: 25px;
+}
+
+.top-bar-section ul {
+    background: linear-gradient(to bottom, #2C3E50, #2C3E50) repeat-x scroll 0 0 #2C3E50;
+    font-size: 16px;
+}
+
+.top-bar-section > ul > .divider, .top-bar-section > ul > [role="separator"] {
+    border-bottom: medium none;
+    border-right: 1px solid #4E4E4E;
+    border-top: medium none;
+    clear: none;
+    height: 60px;
+    width: 0;
+}
+
+.top-bar-section li:not(.has-form) a:not(.button) {
+    background: linear-gradient(to bottom, #2C3E50, #2C3E50) repeat-x scroll 0 0 #2C3E50;
+    line-height: 60px;
+    padding: 0 15px;
+}
+
+.top-bar-section ul li > a {
+    font-size: 1rem;
+}
+
+.top-bar-section .has-dropdown > a:after {
+    top: 30px;
+}
+
+.pricing-table .description {
+    font-size: 1rem;
+}
+
+i.img {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: #ebebeb;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -16px;
+}
+
+i.icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: #ebebeb;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -16px;
+}
+
+i.icon::before {
+    content: "";
+    display: block;
+    background: #c2c2c2;
+    width: 10px;
+    height: 10px;
+    border-radius: 1000px;
+    position: absolute;
+    left: 50%;
+    margin-left: -5px;
+    top: 5px;
+}
+
+i.icon::after {
+    content: "";
+    display: block;
+    background: #c2c2c2;
+    width: 20px;
+    height: 10px;
+    border-radius: 1000px 1000px 0 0;
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-left: -10px;
+    top: 15px;
+}
+
+h6.byline {
+    padding-left: 40px;
+    position: relative;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+h6.byline .data {
+    font-weight: 400;
+}
+
+h6.byline .label {
+    font-size: 60%;
+}
+
+.indented.comment {
+    padding-left: 15px;
+    border-left: 1px solid #ebebeb;
+}
+
+.push {
+    margin-bottom: 40px;
+}
+
+.bullets {
+    margin-left: 30px;
+}
+
+.bump {
+    margin-top: 50px;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.profile-card {
+    padding-top: 15px;
+    padding-bottom: 0px;
+    border-radius: 5px;
+    background: #263849;
+    overflow: hidden;
+}
+
+.profile-card h4 {
+    font-family: "Proxima Nova", "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    color: #fff;
+    font-size: 30px;
+    line-height: 26px;
+}
+
+.profile-card h4 span {
+    font-size: 20px;
+    color: #8C91A7;
+    display: block;
+}
+
+.profile-card img {
+    border-radius: 50%;
+    border: 4px solid #69708C;
+}
+
+.profile-card .button-group {
+    width: 101%;
+}
+
+.profile-card .button-group .button {
+    margin-bottom: 0;
+    border-top: none;
+    border-left: none;
+    border-right: 2px solid #2B2937;
+    border-bottom: none;
+    background-color: #263849;
+    height: 80px;
+    padding-top: 15px;
+    margin-top: 20px;
+    font-weight: 200;
+    font-size: 16px;
+    line-height: 26px;
+    color: #8C91A7;
+    box-shadow: none;
+}
+
+.profile-card .button-group .button span {
+    display: block;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.profile-card p {
+    font-size: 16px;
+    margin-bottom: 0;
+    color: #8C91A7;
+}
+
+.profile-card i {
+    font-size: 26px;
+    vertical-align: middle;
+    padding-right: 5px;
+    color: #394165;
+}
+
+@media only screen and (max-width: 767px) {
+    .profile-card img {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+    }
+
+    .profile-card h4, .profile-card p {
+        text-align: center;
+    }
+
+    .profile-card .button-group .button {
+        font-size: 14px;
+    }
+
+    .profile-card .button-group .button span {
+        font-size: 20px;
+    }
+}
+
+dialog.large, .reveal-modal.large {
+    margin-left: -35%;
+    width: 85%;
+}
+
+html, body, #container {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body > #container {
+    height: auto;
+    min-height: 100%;
+}
+
+#content {
+    padding-bottom: 0em;
+}
+
+.small {
+    color: #333333;
+    font-size: 10px;
+}
+
+.abc a {
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+}
+
+.box_fluid {
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+    float: left;
+    font-size: 100%;
+    line-height: 1.4em;
+    margin-bottom: 1.4%;
+    padding: 0;
+}
+
+.signup-panel {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-top: 30px;
+}
+
+.signup-panel i {
+    font-size: 30px;
+    line-height: 50px;
+    color: #999;
+}
+
+.signup-panel form input, .signup-panel form span {
+    height: 50px;
+}
+
+.signup-panel .welcome {
+    font-size: 26px;
+    text-align: center;
+    margin-left: 0;
+}
+
+.signup-panel p {
+    font-size: 13px;
+    font-weight: 200;
+    margin-left: 25%;
+}
+
+.signup-panel .button {
+    margin-left: 35%;
+}
+
+.comment {
+    padding: 5px !important;
+}

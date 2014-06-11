@@ -1,0 +1,102 @@
+div.pagination {
+    padding: 3px;
+    margin: 3px; /*font-family:Verdana;*/
+    font-size: 8pt;
+    text-decoration: none
+}
+
+div.pagination a {
+    margin: 2px;
+    border: 1px solid #000000;
+
+    text-decoration: none; /* no underline */
+    color: #000000; /*font-family:Verdana;*/
+    font-size: 8pt;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px
+}
+
+div.pagination a:hover, div.pagination a:active {
+    margin: 2px;
+    border: 1px solid #800000;
+
+    background-color: #800000;
+    color: #FFFFFF; /*font-family:Verdana;*/
+    font-size: 8pt;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-decoration: none
+}
+
+div.pagination span.current {
+    margin: 2px;
+    border: 1px solid #000000;
+
+    font-weight: bold;
+    background-color: #000000;
+    color: #FFFFFF; /*font-family:Verdana;*/
+    font-size: 8pt;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px
+}
+
+div.pagination span.disabled {
+    margin: 2px;
+    border: 1px solid #999999;
+
+    color: #999999; /*font-family:Verdana;*/
+    font-size: 8pt;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px
+}
+
+a:hover.list {
+    /*font-family: Verdana;*/
+    font-size: 8pt;
+    font-variant: small-caps;
+    text-decoration: underline;
+    text-transform: capitalize;
+    color: #006699;
+    line-height: 200%;
+    font-weight: bold
+}
+
+a.list {
+    text-transform: capitalize;
+    font-variant: small-caps; /*font-family: Verdana;*/
+    font-size: 8pt;
+    color: #FF0000;
+    text-decoration: underline;
+    line-height: 200%;
+    font-weight: bold
+}
+
+textarea {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
+}
+
+textarea[readonly] {
+    color: darkslategray !important;
+}
+
+.transrow {
+    height: 2em;
+    float: left;
+    width: 2em;
+    margin: 0;
+    padding: 0;
+    border-width: 1px;
+    border-color: #ff0000 !important;
+    border-style: solid;
+    margin: 0;
+}
