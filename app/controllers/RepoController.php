@@ -31,7 +31,7 @@ class RepoController extends BaseController
         $page['action'] = 'summary';
         $project = $this->getProject($id);
         $this->git->setProject($project);
-        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->name));
+        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->repo_path));
         $page['title'] = "$page[project] - Summary";
         $page['subtitle'] = "Summary";
 
@@ -71,7 +71,7 @@ class RepoController extends BaseController
         $page['action'] = 'shortlog';
         $project = $this->getProject($id);
         $this->git->setProject($project);
-        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->name));
+        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->repo_path));
         $page['title'] = "$page[project] - Shortlog";
         $page['subtitle'] = "Shortlog";
         if (isset($_GET['h'])) {
@@ -108,7 +108,7 @@ class RepoController extends BaseController
         $page['action'] = 'tags';
         $project = $this->getProject($id);
         $this->git->setProject($project);
-        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->name));
+        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->repo_path));
         $page['title'] = "$page[project] - Tags";
 
         $info = $this->git->git_get_commit_info($page['project']);
@@ -132,7 +132,7 @@ class RepoController extends BaseController
         $page['action'] = 'viewblob';
         $project = $this->getProject($id);
         $this->git->setProject($project);
-        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->name));
+        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->repo_path));
         $page['hash'] = $this->git->validate_hash($_GET['h']);
 
         $page['title'] = "$page[project] - Blob";
@@ -218,7 +218,7 @@ class RepoController extends BaseController
         $page['action'] = 'commit';
         $project = $this->getProject($id);
         $this->git->setProject($project);
-        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->name));
+        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->repo_path));
         $page['title'] = "$page[project] - Tags";
         $page['commit_id'] = $this->git->validate_hash($_GET['h']);
         if (!$page['commit_id']) $page['notices'][] = array('class' => 'warning', 'message' => 'Invalid hash detected.');
@@ -258,7 +258,7 @@ class RepoController extends BaseController
         $page['action'] = 'tree';
         $project = $this->getProject($id);
         $this->git->setProject($project);
-        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->name));
+        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->repo_path));
         if (isset($_GET['h'])) {
             $page['tree_id'] = $this->git->validate_hash($_GET['h']);
             if (!$page['tree_id']) $page['notices'][] = array('class' => 'warning', 'message' => 'Invalid hash detected.');
@@ -315,7 +315,7 @@ class RepoController extends BaseController
     {
         $project = $this->getProject($id);
         $this->git->setProject($project);
-        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->name));
+        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->repo_path));
         $hash = $this->git->validate_hash($_GET['h']);
         if (!$hash) $page['notices'][] = array('class' => 'warning', 'message' => 'Invalid hash detected.');
         $name = $_GET['n'];
@@ -330,7 +330,7 @@ class RepoController extends BaseController
         $page['action'] = 'search';
         $project = $this->getProject($id);
         $this->git->setProject($project);
-        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->name));
+        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->repo_path));
         $info = $this->git->git_get_commit_info($page['project']);
         $page['commit_id'] = $info['h'];
         $page['tree_id'] = $info['tree'];
@@ -375,7 +375,7 @@ class RepoController extends BaseController
         $page['action'] = 'commitdiff';
         $project = $this->getProject($id);
         $this->git->setProject($project);
-        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->name));
+        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->repo_path));
         $page['title'] = "$page[project] - Commitdiff";
         $hash = $this->git->validate_hash($_GET['h']);
         if (!$hash) $page['notices'][] = array('class' => 'warning', 'message' => 'Invalid hash detected.');
@@ -410,7 +410,7 @@ class RepoController extends BaseController
     {
         $project = $this->getProject($id);
         $this->git->setProject($project);
-        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->name));
+        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->repo_path));
         $info = $this->git->get_project_info($project);
         $tree = $this->git->validate_hash($_GET['h']);
         if (!$tree) $page['notices'][] = array('class' => 'warning', 'message' => 'Invalid hash detected.');
@@ -461,7 +461,7 @@ class RepoController extends BaseController
     {
         $project = $this->getProject($id);
         $this->git->setProject($project);
-        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->name));
+        $page['project'] = $this->git->validate_project(WtsHelper::untrailingslashit($project->repo_path));
         $hash = $this->git->validate_hash($_GET['h']);
         if (!$hash) $page['notices'][] = array('class' => 'warning', 'message' => 'Invalid hash detected.');
         $filename = $page['project'] . "-" . substr($hash, 0, 7) . ".patch";
@@ -482,13 +482,14 @@ class RepoController extends BaseController
         $client = new \Github\Client(
             new \Github\HttpClient\CachedHttpClient(array('cache_dir' => '../github-api-cache'))
         );
-        $issueDetails = $client->api('issue')->show('TheoChevalier', 'FoxShop', $cid);
-        $comments = $client->api('issue')->comments()->all('TheoChevalier', 'FoxShop', $cid);
-
+        $issueDetails = $client->api('issue')->show($project->gituser, $project->gitproject, $cid);
+        $comments = $client->api('issue')->comments()->all($project->gituser, $project->gitproject, $cid);
+        $currentLocale = App::getLocale();
         $view = array(
             'details' => $issueDetails,
             'comments' => $comments,
             'project' => $project,
+            'currentlocale' => $currentLocale,
         );
         $add[] = array(
             'label' => 'Issues',
@@ -511,12 +512,12 @@ class RepoController extends BaseController
         );
         $project = $this->getProject($id);
 
-        $issues = $client->api('issue')->all('TheoChevalier', 'FoxShop', array('state' => 'open', 'per_page' => 100));
-        $issuesClosed = $client->api('issue')->all('TheoChevalier', 'FoxShop', array('state' => 'closed', 'per_page' => 100));
-        $labels = $client->api('issue')->labels()->all('TheoChevalier', 'FoxShop');
+        $issues = $client->api('issue')->all($project->gituser, $project->gitproject, array('state' => 'open', 'per_page' => 100));
+        $issuesClosed = $client->api('issue')->all($project->gituser, $project->gitproject, array('state' => 'closed', 'per_page' => 100));
+        $labels = $client->api('issue')->labels()->all($project->gituser, $project->gitproject);
         //print_r($labels);
-        $issueDetails = $client->api('issue')->show('TheoChevalier', 'FoxShop', 55);
-        $comments = $client->api('issue')->comments()->all('TheoChevalier', 'FoxShop', 55);
+        $issueDetails = $client->api('issue')->show($project->gituser, $project->gitproject, 55);
+        $comments = $client->api('issue')->comments()->all($project->gituser, $project->gitproject, 55);
         foreach ($labels as $label) {
             foreach ($issues as $issue) {
                 foreach ($issue['labels'] as $ilabel) {
@@ -573,11 +574,11 @@ class RepoController extends BaseController
     private function setCrumbs($project, $page = false, $additional = false)
     {
         $links[] = array(
-            'label' => 'Home',
+            'label' => Trans('wts.home'),
             'url' => '/'
         );
         $links[] = array(
-            'label' => 'Projects',
+            'label' => Trans('wts.dashboard'),
             'url' => route('projectlist'),
         );
         $links[] = array(

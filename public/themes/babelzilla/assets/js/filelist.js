@@ -1,6 +1,9 @@
 var $jq = jQuery.noConflict();
 $jq(function () {
     $jq('#files').dataTable({
+        "language": {
+            "url": "/ajax/getlocales/" + language
+        },
         "bJQueryUI": false,
         "bStateSave": false,
         "bSortClasses": false,

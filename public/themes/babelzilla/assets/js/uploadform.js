@@ -30,7 +30,8 @@ $jq(document).ready(function () {
         retry: {
             enableAuto: true
         }
-    }).on('complete', function (event, id, name, response) {
+    })
+        .on('complete', function (event, id, name, response) {
             $jq('#busy4').activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5});
             $jq('#FineUploader').hide();
             $jq('#warnmessage').hide();
@@ -46,7 +47,9 @@ $jq(document).ready(function () {
                     if (data.status == 'success') {
                         $jq("#messages").append(data.message);
                         var jqxhr = $jq.post('ajax/postupload',
-                            { archname: data.path}
+                            { archname: data.path,
+                                project: $jq('#projects').val()
+                            }
                             , function (data) {
 
                                 if (data.status == 'success') {
@@ -63,5 +66,9 @@ $jq(document).ready(function () {
                     }
                     else if (data.status == 'error') alert("Error on query!");
                 })
+        })
+        .on('submit', function (id, name) {
+            var project = $jq('#projects').val();
+            $jq(this).fineUploader('setParams', { 'project': project });
         });
 });

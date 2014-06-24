@@ -277,10 +277,239 @@ function _wp_specialchars($string, $quote_style = ENT_NOQUOTES, $charset = false
 
     return $string;
 }
-
+use ICanBoogie\CLDR\Provider,
+    ICanBoogie\CLDR\RunTimeCache,
+    ICanBoogie\CLDR\FileCache,
+    ICanBoogie\CLDR\Retriever,
+    ICanBoogie\CLDR\Repository,
+    ICanBoogie\CLDR\LocalizedDateTime,
+    ICanBoogie\DateTime;
 
 class WtsHelper
+
 {
+    public static function getHtmlDateSelectDropDown($selected = 0)
+    {
+        $date = date('Y-m-d H:i:s');
+
+        $mylist[] = WtsHelper::makeOption('as_short', WtsHelper::localeDate($date));
+        $mylist[] = WtsHelper::makeOption('as_medium', WtsHelper::localeDate($date, 'as_medium'));
+        $mylist[] = WtsHelper::makeOption('as_long', WtsHelper::localeDate($date, 'as_long'));
+        $mylist[] = WtsHelper::makeOption('as_full', WtsHelper::localeDate($date, 'as_full'));
+
+        // Generate the HTML radio button list.
+        $html = WtsHelper::selectList($mylist, 'dateformat', 'class="inputbox"', 'value', 'text', $selected);
+        return $html;
+    }
+
+    public static function getHtmlLangAvailDropDown($selected = '')
+    {
+        $avail = Config::get('wts.appLanguages');
+        $html = '<select id="Applocale" name="Applocale">';
+        foreach ($avail as $locale) {
+            $html .= '<option value="' . $locale . '"';
+            if ($locale == $selected) $html .= ' selected';
+            $html .= '>' . $locale . '</option>' . "\n";
+        }
+        $html .= '</select>';
+        return $html;
+    }
+
+    /*
+     *
+     */
+    public static function localeDate($date, $format = 'as_short')
+    {
+        if (Auth::Check()) {
+            $settings = unserialize(Auth::user()->settings);
+            $timezone = $settings['timezone'];
+        } else {
+            $timezone = Config::get('app.timezone');
+        }
+        $provider = new Provider
+        (
+            new RunTimeCache(new FileCache(app_path() . '/cldr_cache')),
+            new Retriever
+        );
+        $repository = new Repository($provider);
+        $locale = $repository->locales[App::getLocale()];
+        $time = new DateTime($date, Config::get('app.timezone'));
+        $time->zone = $timezone;
+        $ldt = new LocalizedDateTime($time, $locale);
+        return $ldt->{$format};
+    }
+
+    public static function getHtmlTimeZoneDropDown($selected = '')
+    {
+        $regions = array(
+            'Africa' => DateTimeZone::AFRICA,
+            'America' => DateTimeZone::AMERICA,
+            'Antarctica' => DateTimeZone::ANTARCTICA,
+            'Asia' => DateTimeZone::ASIA,
+            'Atlantic' => DateTimeZone::ATLANTIC,
+            'Europe' => DateTimeZone::EUROPE,
+            'Indian' => DateTimeZone::INDIAN,
+            'Pacific' => DateTimeZone::PACIFIC
+        );
+
+        $timezones = array();
+        foreach ($regions as $name => $mask) {
+            $zones = DateTimeZone::listIdentifiers($mask);
+            foreach ($zones as $timezone) {
+                // Lets sample the time there right now
+                $time = new DateTime(NULL, new DateTimeZone($timezone));
+
+                $ampm = $time->format('H') > 12 ? ' (' . $time->format('g:i a') . ')' : '';
+
+                // Remove region name and add a sample time
+                $timezones[$name][$timezone] = substr($timezone, strlen($name) + 1) . ' - ' . $time->format('H:i') . $ampm;
+            }
+        }
+
+        $html = '<select id="timezone" name="timezone">';
+        foreach ($timezones as $region => $list) {
+            $html .= '<optgroup label="' . $region . '">' . "\n";
+            foreach ($list as $timezone => $name) {
+                $html .= '<option value="' . $timezone . '"';
+                if ($timezone == $selected) $html .= ' selected';
+                $html .= '>' . $name . '</option>' . "\n";
+            }
+            $html .= '<optgroup>' . "\n";
+        }
+        $html .= '</select>';
+        return $html;
+    }
+
+    public static function formatdate($date, $locale, $pattern)
+    {
+        $formatter = new IntlDateFormatter($locale, IntlDateFormatter::FULL, IntlDateFormatter::FULL);
+        $formatter->setPattern($pattern);
+        return $formatter->format($date);
+    }
+
+    public static function getLanguage($supported = array('en', 'de'))
+    {
+        if (Auth::Check()) {
+            $settings = unserialize(Auth::User()->settings);
+            return ($settings['locale']);
+        }
+        # start with the default language
+        $language = $supported[0];
+        # get the list of languages supported by the browser
+        $browserLanguages = WtsHelper::getBrowserLanguages();
+        # look if the browser language is a supported language, by checking the array entries
+        foreach ($browserLanguages as $browserLanguage) {
+            # if a supported language is found, set it and stop
+            if (in_array($browserLanguage, $supported)) {
+                $language = $browserLanguage;
+                break;
+            }
+        }
+        # return the found language
+        return $language;
+    }
+
+    public static function getBrowserLanguages()
+    {
+        # check if environment variable HTTP_ACCEPT_LANGUAGE exists
+        if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            # if not return an empty language array
+            return array();
+        }
+        # explode environment variable HTTP_ACCEPT_LANGUAGE at ,
+        $browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        # convert the headers string to an array
+        $browserLanguagesSize = sizeof($browserLanguages);
+        for ($i = 0; $i < $browserLanguagesSize; $i++) {
+            # explode string at ;
+            $browserLanguage = explode(';', $browserLanguages[$i]);
+            # cut string and place into array
+            $browserLanguages[$i] = substr($browserLanguage[0], 0, 2);
+        }
+        # remove the duplicates and return the browser languages
+        return array_values(array_unique($browserLanguages));
+    }
+
+    public static function makeOption($value, $text = '', $value_name = 'value', $text_name = 'text')
+    {
+        $obj = new stdClass;
+        $obj->$value_name = $value;
+        $obj->$text_name = trim($text) ? $text : $value;
+        return $obj;
+    }
+
+    public static function selectList(&$arr, $tag_name, $tag_attribs, $key, $text, $selected = NULL, $idtag = false, $flag = false)
+    {
+        reset($arr);
+        $id = $tag_name;
+        if ($idtag) {
+            $id = $idtag;
+        }
+        $html = '<select name="' . $tag_name . '" id="' . $id . '" ' . $tag_attribs . '>';
+        for ($i = 0, $n = count($arr); $i < $n; $i++) {
+            if (is_array($arr[$i])) {
+                $k = $arr[$i][$key];
+                $t = $arr[$i][$text];
+                $id = (isset($arr[$i]['id']) ? $arr[$i]['id'] : null);
+            } else {
+                $k = $arr[$i]->$key;
+                $t = $arr[$i]->$text;
+                $id = (isset($arr[$i]->id) ? $arr[$i]->id : null);
+            }
+            $splitText = explode(" - ", $t, 2);
+            $t = $splitText[0];
+            if (isset($splitText[1])) {
+                $t .= " - " . $splitText[1];
+            }
+            $extra = '';
+            if (is_array($selected)) {
+                foreach ($selected as $obj) {
+                    $k2 = $obj->$key;
+                    if ($k == $k2) {
+                        $extra .= ' selected="selected"';
+                        break;
+                    }
+                }
+            } else {
+                $extra .= ($k == $selected ? ' selected="selected"' : '');
+            }
+            $html .= '<option value="' . $k . '" ' . $extra . '>' . $t . '</option>';
+        }
+        $html .= '</select>';
+        return $html;
+    }
+
+    public static function radioList(&$arr, $tag_name, $tag_attribs, $selected = null, $key = 'value', $text = 'text', $idtag = false)
+    {
+        reset($arr);
+        $html = '';
+        $id_text = $tag_name;
+        if ($idtag) {
+            $id_text = $idtag;
+        }
+        for ($i = 0, $n = count($arr); $i < $n; $i++) {
+            $k = $arr[$i]->$key;
+            $t = $arr[$i]->$text;
+            $id = (isset($arr[$i]->id) ? @$arr[$i]->id : null);
+            $extra = '';
+            $extra .= $id ? " id=\"" . $arr[$i]->id . "\"" : '';
+            if (is_array($selected)) {
+                foreach ($selected as $obj) {
+                    $k2 = $obj->$key;
+                    if ($k == $k2) {
+                        $extra .= " selected=\"selected\"";
+                        break;
+                    }
+                }
+            } else {
+                $extra .= ($k == $selected ? " checked=\"checked\"" : '');
+            }
+            $html .= "\n\t<input type=\"radio\" name=\"$tag_name\" id=\"$id_text$k\" value=\"" . $k . "\"$extra $tag_attribs />";
+            $html .= "\n\t<label for=\"$id_text$k\">$t</label>";
+        }
+        $html .= "\n";
+        return $html;
+    }
 
     public function breadcrumbs($breadcrumbs, $class = 'twelve columns', $separator = ' / ')
     {
@@ -319,7 +548,7 @@ class WtsHelper
     public static function getHtmlLicenseDropdown($selected = '')
     {
         $html = '<select id="licensedd" name="license">';
-        $licenses = json_decode(file_get_contents('components/com_webapp/licenses.json'));
+        $licenses = json_decode(file_get_contents(app_path() . '/other/licenses.json'));
         foreach ($licenses as $license) {
             $value = $license->id;
             $option = $license->name;

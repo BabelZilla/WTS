@@ -1,6 +1,4 @@
 <?php
-
-
 class AjaxController extends BaseController
 {
 
@@ -8,6 +6,38 @@ class AjaxController extends BaseController
     {
         /* Only Ajax requests are allowed */
         $this->beforeFilter('ajax');
+    }
+
+    public function saveusersettings()
+    {
+        $locale = Input::get('Applocale', 'en');
+        $preflicense = Input::get('license', 'MPL-2.0');
+        $timezone = Input::get('timezone', 'UTC');
+        $dateformat = Input::get('dateformat', 'as_short');
+        $uid = Auth::User()->id;
+        $user = User::find($uid);
+        $settings['timezone'] = $timezone;
+        $settings['locale'] = $locale;
+        $settings['license'] = $preflicense;
+        $settings['dateformat'] = $dateformat;
+        $user::unguard();
+        $user->settings = serialize($settings);
+
+        try {
+            $user->updateUniques();
+            $queries = DB::getQueryLog();
+            $last_query = end($queries);
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        $user::reguard();
+    }
+
+    public function getlocales($language)
+    {
+        $locales = file_get_contents(app_path() . '/other/' . $language . '.lang');
+        return $locales;
     }
 
     public function versions()
@@ -20,13 +50,13 @@ class AjaxController extends BaseController
         $versions = Input::Get('versions');
         $show = Input::Get('show');
 
-        $entity = originalStrings::where('project_id', '=', $projectId)
+        $entity = OriginalString::where('project_id', '=', $projectId)
             ->where('context', '=', $context)
             ->first();
-        $translationSet = ProjectTranslationSets::where('project_id', '=', $projectId)
+        $translationSet = ProjectTranslationSet::where('project_id', '=', $projectId)
             ->where('locale', '=', $language)
             ->first();
-        $translation = translatedStrings::where('project_id', '=', $projectId)
+        $translation = TranslatedString::where('project_id', '=', $projectId)
             ->where('original_id', '=', $entity->id)
             ->where('translation_set_id', '=', $translationSet->translationset_id)
             ->first();
@@ -36,7 +66,8 @@ class AjaxController extends BaseController
             $lang = substr($language, 0, 2);
             $PluralRules = WtsHelper::getRule($lang);
         }
-        foreach ($translationLastVersions as $t) {
+        if ($translationLastVersions) {
+            foreach ($translationLastVersions as $t) {
             $vars = array(
                 'entity' => $entity,
                 't' => $t,
@@ -50,6 +81,9 @@ class AjaxController extends BaseController
             $diff = $versions - $show;
             echo "<div class='span12'>$diff more versions available</div><div class='clear'></div><hr/>";
         }
+        } else {
+
+        }
     }
 
     public function parse()
@@ -57,7 +91,7 @@ class AjaxController extends BaseController
         $langname = Input::get('language');
         $projectId = Input::get('project');
         $project = $this->getProject($projectId);
-        print_r($project);
+
         $translationsets = $project->translationssets()->get();
         foreach ($translationsets as $set) {
             $langs[] = $set->name;
@@ -109,37 +143,33 @@ class AjaxController extends BaseController
         $fileId = Input::get('fileId');
         $oFile = Input::get('ofile');
         $plural = Input::get('plural');
-        $pluralRule = json_decode(Input::get('pluralrule'));
+        //$pluralRule = json_decode(Input::get('pluralrule'));
         $originalString = Input::get('context');
         $project = $this->getProject($projectId);
         $isTranslator = $project->isTranslator($language, $user_id);
         $isMaintainer = $project->isMaintainer($user_id);
         $tText = $isTranslator ? 'Yes' : 'No';
         $mText = $isMaintainer ? 'Yes' : 'No';
-        //echo "Perms:" . $tText . "<br>$mText<br>";
-        //die();
-        $entity = originalStrings::where('project_id', '=', $projectId)
+
+        $entity = OriginalString::where('project_id', '=', $projectId)
             ->where('context', '=', $requestID)
             ->first();
-        //die($translatedstr);
-        $translationSet = ProjectTranslationSets::where('project_id', '=', $projectId)
+        $translationSet = ProjectTranslationSet::where('project_id', '=', $projectId)
             ->where('locale', '=', $language)
             ->first();
-        $translation = translatedStrings::where('project_id', '=', $projectId)
+        $translation = TranslatedString::where('project_id', '=', $projectId)
             ->where('original_id', '=', $entity->id)
             ->where('translation_set_id', '=', $translationSet->translationset_id)
             ->first();
-        $tfile = TranslatedFiles::where('original_file', '=', $oFile)
+        $tfile = TranslatedFile::where('original_file', '=', $oFile)
             ->where('project_id', '=', $projectId)
             ->where('language', '=', $language)
             ->first();
-        //print_r(Capsule::getQueryLog());
-        //die();
         $isTranslator = true;
         if ($isTranslator) {
             if (!empty($translatedstr)) {
                 if (!$translation) {
-                    $translation = new translatedStrings();
+                    $translation = new TranslatedString();
                     $translation->project_id = $projectId;
                     $translation->context = $entity->context;
                     $translation->original_id = $entity->id;
@@ -148,6 +178,7 @@ class AjaxController extends BaseController
                     $translation->user_id = $user_id;
                     $translation->language = $language;
                     $translation->file_id = $tfile->file_id;
+                    $change = 'status-translated';
                 }
                 $translation->{$plural} = $translatedstr;
                 if (!$translation->save()) {
@@ -156,9 +187,10 @@ class AjaxController extends BaseController
             } else {
                 $translation->Delete();
                 unset($translation);
+                $change = 'status-untranslated';
             }
         } else {
-            $translation = new Suggestions();
+            $translation = new Suggestion();
             $translation->project_id = $projectId;
             $translation->context = $entity->context;
             $translation->original_id = $entity->id;
@@ -169,16 +201,19 @@ class AjaxController extends BaseController
             $translation->file_id = $tfile->file_id;
             $translation->{$plural} = $translatedstr;
             $translation->save();
+            $change = 'status-unproofed';
         }
         $orgstr = $translation;
         $vars = array(
             'entity' => $mText,
             'orgstr' => $translation,
-            'PluralRule' => $pluralRule,
+            //'PluralRule' => $pluralRule,
         );
-        $row = $this->renderPhpToString('translationrow.php', $vars);
+
+        //$row = $this->renderPhpToString('translationrow.php', $vars);
         $response['id'] = $entity->id;
-        $response['row'] = $row;
+        $response['row'] = NULL;
+        $response['change'] = $change;
         echo json_encode($response);
         //return Response::json($response);
     }
@@ -191,22 +226,23 @@ class AjaxController extends BaseController
         $file = Input::get('file');
         $oFile = Input::get('ofile');
         $originalString = Input::get('context');
-        $cnt = Suggestions::where('project_id', '=', $projectId)
+        $cnt = Suggestion::where('project_id', '=', $projectId)
             ->where('file_id', '=', $file)
             ->where('original_file', '=', $oFile)
             ->where('language', '=', $language)
             ->where('context', '=', $originalString)
             ->count();
-        route('ajaxsuggestions', array('project' => $project->project_id,
-            'language' => $language,
+        if ($cnt) {
+            $website = route('ajaxsuggestions', array('project' => $projectId,
+                'language' => $language,
             'file' => $file,
             'ofile' => $oFile,
             'context' => $originalString,
         ));
-        $pagination = new CSSPagination($cnt, 1, $website, 'ajaxPage'); // create instance object
-        $pagination->setPage($page);
-        $suggestion = Suggestions::where('project_id', '=', $projectId)
-            ->where('file_id', '=', $file)
+            $pagination = new CSSPagination($cnt, 1, $website, 'ajaxPage');
+            $pagination->setPage($page);
+            $suggestion = Suggestion::where('project_id', '=', $projectId)
+                ->where('file_id', '=', $file)
             ->where('original_file', '=', $oFile)
             ->where('language', '=', $language)
             ->where('context', '=', $originalString)
@@ -214,8 +250,8 @@ class AjaxController extends BaseController
             ->skip($pagination->getLimit())
             ->get();
         $suggestion = $suggestion[0];
-        $user = Users::find($suggestion->user_id);
-        $PluralRules = WtsHelper::getRule($language);
+            $user = User::find($suggestion->user_id);
+            $PluralRules = WtsHelper::getRule($language);
         if (!$PluralRules) {
             $lang = substr($language, 0, 2);
             $PluralRules = WtsHelper::getRule($lang);
@@ -229,6 +265,9 @@ class AjaxController extends BaseController
         );
         $versionHtml = renderPhpToString('widgets/versions.php', $vars);
         echo $versionHtml;
+        } else {
+            echo "No previous version";
+        }
     }
 
     public function preview()
@@ -261,6 +300,7 @@ class AjaxController extends BaseController
         $user_id = Auth::user()->id;
         $tempFolder = Config::Get('wts.tempFolder');
         $uploadFolder = Config::Get('wts.uploadFolder') . $user_id . '/';
+        $project = Input::get('project');
 
         // Try to create folders
         @mkdir($uploadFolder);
@@ -275,7 +315,7 @@ class AjaxController extends BaseController
 
         $result = $uploader->handleUpload($tempFolder);
         $result['filename'] = $uploader->getUploadName();
-
+        $result['project'] = $project;
         $uploadedFile = $tempFolder . $result['filename'];
 
         // copy the file and delete the temp. folder
@@ -302,18 +342,18 @@ class AjaxController extends BaseController
             $objZipFile->close();
             $response['path'] = $strWorkingDir;
             $response['status'] = 'success';
-            $response['message'] = '<div class="alert alert-success" style="margin: 20px 0 0; text-align: center;">Successfully unpacked ' . $archivename . '</div>';
+            $response['message'] = '<div class="alert alert-success" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.unpacksuccess', array('archivname' => $archivename)) . '</div>';
         } else {
             switch ($intErrCode) {
                 case ZIPARCHIVE::ER_NOZIP:
                     $strError = 'Not a zip archive';
                     break;
                 default:
-                    $strError = 'Error code: ' . $intErrCode;
+                    $strError = $intErrCode;
             }
             $response['status'] = 'error';
             $response['error'] = $strError;
-            $response['message'] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">Failed to uncompress ' . $archivename . 'Code: ' . $strError . '</div>';
+            $response['message'] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.unpacksuccess', array('archivname' => $archivename)) . ' ' . $strError . '</div>';
             //throw new Exception(sprintf('Failed to uncompress %s: %s', $strXpiFilePath, $strError));
         }
         Utils::RecursiveChmod($strWorkingDir);
@@ -325,11 +365,12 @@ class AjaxController extends BaseController
     {
         $user_id = Auth::user()->id;
         $strWorkingDir = Input::get('archname');
+        $projectId = Input::get('project');
         $uploadPath = Config::Get('wts.uploadFolder') . $user_id . '/';
         $strWorkingDir = Utils::utf8_urldecode($strWorkingDir);
         $strWorkingDir = str_replace($uploadPath, '', $strWorkingDir);
         $response['status'] = 'success';
-        $Importer = new MozWebAppImporter();
+        $Importer = new MozWebAppImporter($projectId);
         //echo urldecode($strWorkingDir);
         $Importer->import($strWorkingDir);
         $project = $Importer->project->project_id;

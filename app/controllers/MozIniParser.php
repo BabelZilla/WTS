@@ -16,10 +16,14 @@ class MozIniparser extends BaseParser
     public function Parse($filename, $pluralCount = 2, $sdk = 0)
     {
         unset($this->result);
-        if (!file_exists($filename)) {
-            //echo "File not found: $filename<br>";
-            return false;
+        if (empty($filename)) {
+            throw new \Exception('MozIniParser: File not defined.');
+        } elseif (file_exists($filename) === false) {
+            throw new \Exception('MozIniParser: File does not exists: "' . htmlspecialchars($filename) . '"');
+        } elseif (is_readable($filename) === false) {
+            throw new \Exception('MozIniParser: File is not readable: "' . htmlspecialchars($filename) . '"');
         }
+
         $iniStr = file_get_contents($filename);
         $lines = explode("\n", $iniStr);
 
@@ -34,13 +38,12 @@ class MozIniparser extends BaseParser
             if (!strpos($line, '=')) {
                 continue;
             }
-            $objEntity = new Fileentity();
+            $objEntity = new FileEntity();
             $tmp = explode("=", $line, 2);
             $key = rtrim($tmp[0]);
             $value = ltrim($tmp[1]);
             preg_match("/^(.*)\[(zero|one|two|few|many|other)\]$/", trim($tmp[0]), $matches);
             if ($matches) {
-                //print_r($matches);
                 $ret[$matches[1]][$matches[2]] = $value;
                 // It's possible to omit [other] plural, so we check again
                 // if we already have an entity with that name and reload it
@@ -95,7 +98,7 @@ class MozIniparser extends BaseParser
                     }
                 }
             }
-            if ($objEntity instanceof Fileentity) {
+            if ($objEntity instanceof FileEntity) {
                 //print_r($objEntity);
                 $this->result[$objEntity->Key] = $objEntity;
             }
@@ -123,7 +126,7 @@ class MozIniparser extends BaseParser
         $strTemplateContentsA = file_get_contents($uploadpath . $strTemplateFile);
         $strTemplateContentsArray = file($uploadpath . $strTemplateFile);
         if (!$strTemplateContentsA) {
-            //echo $uploadpath.$strTemplateFile;
+
         }
         foreach ($strTemplateContentsArray as $val) {
             $p = explode('=', $val);
@@ -135,10 +138,8 @@ class MozIniparser extends BaseParser
             ->get();
         $allPlurals = array('one', 'two', 'few', 'many', 'other', 'zero');
         foreach ($pluralStrings as $cldr) {
-            //print_r($cldr);
+
             $required = array_keys($PluralRules);
-            //print_r(array_diff ($allPlurals , $required));
-            //print_r(array_diff ($required, $allPlurals));
             foreach ($required as $key => $req) {
                 $found = array_key_exists($cldr->context . '[' . $req . ']', $strTemplateContentsArrayB);
                 if ($found) {

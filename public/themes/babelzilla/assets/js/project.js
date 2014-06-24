@@ -5,6 +5,9 @@ $jq(function () {
         social_tools: false
     });
     $jq('#translations').dataTable({
+        "language": {
+            "url": "/ajax/getlocales/" + language
+        },
         "bJQueryUI": false,
         "bStateSave": false,
         "bSortClasses": false,

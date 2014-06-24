@@ -2,6 +2,9 @@ var $jq = jQuery.noConflict();
 $jq(function () {
     $jq('#allWebapps').dataTable(
         {
+            "language": {
+                "url": "/ajax/getlocales/" + language
+            },
             "bJQueryUI": false,
             "bStateSave": false,
             "bSortClasses": false,
@@ -10,7 +13,7 @@ $jq(function () {
             "bProcessing": false,
             "iDisplayLength": 50,
             "aaSorting": [
-                [3, 'desc']
+                [2, 'desc']
             ],
             "aoColumns": [
                 { "sType": "html",

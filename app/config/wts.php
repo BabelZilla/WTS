@@ -1,5 +1,6 @@
 <?php
 return array(
+    'appLanguages' => array('en', 'de', 'es', 'fr', 'it', 'nl', 'sv'),
     'providers' => array('Google', 'Twitter'),
     'availLanguages' => array('af', 'ak', 'ar', 'as', 'ast', 'be', 'bg', 'bn-BD', 'bn-IN', 'br', 'bs', 'ca', 'cs', 'cy',
         'da', 'de', 'el', 'en-GB', 'en-US', 'en-ZA', 'eo', 'es-AR', 'es-CL', 'es-ES', 'es-MX', 'et', 'eu', 'fa', 'ff', 'fi',

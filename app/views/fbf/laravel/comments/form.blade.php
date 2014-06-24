@@ -7,9 +7,9 @@
 {{ Form::hidden('commentable', Crypt::encrypt(get_class($commentable) . '.' . $commentable->getKey())) }}
 
 <div class="form--group{{ $errors->has('comment') ? ' form--group__error' : '' }}">
-    {{ Form::label('comment', trans('laravel-comments::messages.form.label')) }}
+    {{ Form::label('comment', trans('comments.form.label')) }}
     {{ Form::textarea('comment', Input::old('comment'), array('placeholder' =>
-    trans('laravel-comments::messages.form.placeholder'), 'required' => 'required')) }}
+    trans('comments.form.placeholder'), 'required' => 'required')) }}
     @if ($errors->has('comment'))
     <p class="form--error">
         {{ $errors->first('comment') }}
@@ -18,7 +18,7 @@
 </div>
 
 <div class="form--group form--group__submit">
-    {{ Form::submit(trans('laravel-comments::messages.form.submit'), array('class' => 'btn')) }}
+    {{ Form::submit(trans('comments.form.submit'), array('class' => 'btn')) }}
 </div>
 
 {{ Form::close() }}

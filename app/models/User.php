@@ -5,6 +5,11 @@ use Zizaco\Confide\ConfideUser;
 class User extends ConfideUser
 {
 
+    public static $rules = array(
+        'username' => 'unique:users,username',
+        'email' => 'email'
+    );
+
     public function profiles()
     {
         return $this->hasMany('Profile');

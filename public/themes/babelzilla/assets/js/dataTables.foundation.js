@@ -1,5 +1,7 @@
 /* Set the defaults for DataTables initialisation */
-$.extend(true, $.fn.dataTable.defaults, {
+var $jq = jQuery.noConflict();
+
+$jq.extend(true, $jq.fn.dataTable.defaults, {
     "sDom": "<'row'<'small-6 columns'l><'small-6 columns'f>r>" +
         "t" +
         "<'row'<'small-6 columns'i><'small-6 columns'p>>",
@@ -11,10 +13,10 @@ $.extend(true, $.fn.dataTable.defaults, {
 
 // In 1.10 we use the pagination renderers to draw the Bootstrap paging,
 // rather than  custom plug-in
-if ($.fn.dataTable.Api) {
-    $.fn.dataTable.defaults.renderer = 'foundation';
-    $.fn.dataTable.ext.renderer.pageButton.foundation = function (settings, host, idx, buttons, page, pages) {
-        var api = new $.fn.dataTable.Api(settings);
+if ($jq.fn.dataTable.Api) {
+    $jq.fn.dataTable.defaults.renderer = 'foundation';
+    $jq.fn.dataTable.ext.renderer.pageButton.foundation = function (settings, host, idx, buttons, page, pages) {
+        var api = new $jq.fn.dataTable.Api(settings);
         var classes = settings.oClasses;
         var lang = settings.oLanguage.oPaginate;
         var btnDisplay, btnClass;
@@ -31,7 +33,7 @@ if ($.fn.dataTable.Api) {
             for (i = 0, ien = buttons.length; i < ien; i++) {
                 button = buttons[i];
 
-                if ($.isArray(button)) {
+                if ($jq.isArray(button)) {
                     attach(container, button);
                 }
                 else {
@@ -76,7 +78,7 @@ if ($.fn.dataTable.Api) {
                     }
 
                     if (btnDisplay) {
-                        node = $('<li>', {
+                        node = $jq('<li>', {
                             'class': classes.sPageButton + ' ' + btnClass,
                             'aria-controls': settings.sTableId,
                             'tabindex': settings.iTabIndex,
@@ -84,7 +86,7 @@ if ($.fn.dataTable.Api) {
                                 settings.sTableId + '_' + button :
                                 null
                         })
-                            .append($('<a>', {
+                            .append($jq('<a>', {
                                 'href': '#'
                             })
                                 .html(btnDisplay)
@@ -100,17 +102,17 @@ if ($.fn.dataTable.Api) {
         };
 
         attach(
-            $(host).empty().html('<ul class="pagination"/>').children('ul'),
+            $jq(host).empty().html('<ul class="pagination"/>').children('ul'),
             buttons
         );
     }
 }
 else {
     // Integration for 1.9-
-    $.fn.dataTable.defaults.sPaginationType = 'foundation';
+    $jq.fn.dataTable.defaults.sPaginationType = 'foundation';
 
     /* API method to get paging information */
-    $.fn.dataTableExt.oApi.fnPagingInfo = function (oSettings) {
+    $jq.fn.dataTableExt.oApi.fnPagingInfo = function (oSettings) {
         return {
             "iStart": oSettings._iDisplayStart,
             "iEnd": oSettings.fnDisplayEnd(),
@@ -126,7 +128,7 @@ else {
 
 
     /* Bootstrap style pagination control */
-    $.extend($.fn.dataTableExt.oPagination, {
+    $jq.extend($jq.fn.dataTableExt.oPagination, {
         "foundation": {
             "fnInit": function (oSettings, nPaging, fnDraw) {
                 var oLang = oSettings.oLanguage.oPaginate;
@@ -137,15 +139,15 @@ else {
                     }
                 };
 
-                $(nPaging).append(
+                $jq(nPaging).append(
                     '<ul class="pagination">' +
                         '<li class="prev arrow unavailable"><a href="">&laquo;</a></li>' +
                         '<li class="next arrow unavailable"><a href="">&raquo;</a></li>' +
                         '</ul>'
                 );
-                var els = $('a', nPaging);
-                $(els[0]).bind('click.DT', { action: "previous" }, fnClickHandler);
-                $(els[1]).bind('click.DT', { action: "next" }, fnClickHandler);
+                var els = $jq('a', nPaging);
+                $jq(els[0]).bind('click.DT', { action: "previous" }, fnClickHandler);
+                $jq(els[1]).bind('click.DT', { action: "next" }, fnClickHandler);
             },
 
             "fnUpdate": function (oSettings, fnDraw) {
@@ -182,10 +184,10 @@ else {
                     }
 
                     // End
-                    if ($.inArray(oPaging.iTotalPages - 2, pages) === -1 && oPaging.iPage < oPaging.iTotalPages - 2) {
+                    if ($jq.inArray(oPaging.iTotalPages - 2, pages) === -1 && oPaging.iPage < oPaging.iTotalPages - 2) {
                         pages.push(oPaging.iTotalPages - 2);
                     }
-                    if ($.inArray(oPaging.iTotalPages - 1, pages) === -1) {
+                    if ($jq.inArray(oPaging.iTotalPages - 1, pages) === -1) {
                         pages.push(oPaging.iTotalPages - 1);
                     }
 
@@ -203,10 +205,10 @@ else {
                     }
 
                     // Start
-                    if ($.inArray(1, pages) === -1 && oPaging.iTotalPages > 1) {
+                    if ($jq.inArray(1, pages) === -1 && oPaging.iTotalPages > 1) {
                         pages.unshift(1);
                     }
-                    if ($.inArray(0, pages) === -1) {
+                    if ($jq.inArray(0, pages) === -1) {
                         pages.unshift(0);
                     }
                 }
@@ -214,17 +216,17 @@ else {
                 for (i = 0, ien = an.length; i < ien; i++) {
                     // Remove the middle elements
                     host = an[i];
-                    $('li:gt(0)', host).filter(':not(:last)').remove();
+                    $jq('li:gt(0)', host).filter(':not(:last)').remove();
 
                     // Add the new list items and their event handlers
-                    $.each(pages, function (i, page) {
+                    $jq.each(pages, function (i, page) {
                         klass = page === null ? 'unavailable' :
                             page === oPaging.iPage ? 'current' : '';
-                        $('<li class="' + klass + '"><a href="">' + (page === null ? '&hellip;' : page + 1) + '</a></li>')
-                            .insertBefore($('li:last', host))
+                        $jq('<li class="' + klass + '"><a href="">' + (page === null ? '&hellip;' : page + 1) + '</a></li>')
+                            .insertBefore($jq('li:last', host))
                             .bind('click', function (e) {
                                 e.preventDefault();
-                                var pageNum = parseInt($('a', this).text(), 10);
+                                var pageNum = parseInt($jq('a', this).text(), 10);
                                 if (!isNaN(pageNum)) {
                                     oSettings._iDisplayStart = (pageNum - 1) * oPaging.iLength;
                                     fnDraw(oSettings);
@@ -234,15 +236,15 @@ else {
 
                     // Add / remove disabled classes from the static elements
                     if (oPaging.iPage === 0) {
-                        $('li:first', host).addClass('unavailable');
+                        $jq('li:first', host).addClass('unavailable');
                     } else {
-                        $('li:first', host).removeClass('unavailable');
+                        $jq('li:first', host).removeClass('unavailable');
                     }
 
                     if (oPaging.iPage === oPaging.iTotalPages - 1 || oPaging.iTotalPages === 0) {
-                        $('li:last', host).addClass('unavailable');
+                        $jq('li:last', host).addClass('unavailable');
                     } else {
-                        $('li:last', host).removeClass('unavailable');
+                        $jq('li:last', host).removeClass('unavailable');
                     }
                 }
             }
@@ -255,9 +257,9 @@ else {
  * TableTools Foundation compatibility
  * Required TableTools 2.1+
  */
-if ($.fn.DataTable.TableTools) {
+if ($jq.fn.DataTable.TableTools) {
     // Set the classes that TableTools uses to something suitable for Foundation
-    $.extend(true, $.fn.DataTable.TableTools.classes, {
+    $jq.extend(true, $jq.fn.DataTable.TableTools.classes, {
         "container": "DTTT button-group",
         "buttons": {
             "normal": "button",
@@ -276,7 +278,7 @@ if ($.fn.DataTable.TableTools) {
     });
 
     // Have the collection use a bootstrap compatible dropdown
-    $.extend(true, $.fn.DataTable.TableTools.DEFAULTS.oTags, {
+    $jq.extend(true, $jq.fn.DataTable.TableTools.DEFAULTS.oTags, {
         "collection": {
             "container": "ul",
             "button": "li",

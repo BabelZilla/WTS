@@ -29,7 +29,7 @@ return array(
     |
     */
 
-    'lifetime' => 120,
+    'lifetime' => 240,
 
     'expire_on_close' => false,
 
@@ -96,7 +96,7 @@ return array(
     |
     */
 
-    'cookie' => 'laravel_session',
+    'cookie' => 'babelzilla_session',
 
     /*
     |--------------------------------------------------------------------------

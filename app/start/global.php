@@ -10,7 +10,7 @@
 | your classes in the "global" namespace without Composer updating.
 |
 */
-
+error_reporting(E_ALL ^ (E_NOTICE | E_WARNING | E_DEPRECATED | E_STRICT));
 ClassLoader::addDirectories(array(
 
     app_path() . '/commands',
@@ -77,3 +77,6 @@ App::down(function () {
 */
 
 require app_path() . '/filters.php';
+App::bind('Fbf\LaravelComments\CommentsController', function () {
+    return new Fbf\LaravelComments\CommentsController(new Comment);
+});

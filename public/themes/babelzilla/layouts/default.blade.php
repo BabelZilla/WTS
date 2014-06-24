@@ -1,3 +1,8 @@
+<?php
+$countlanguages = Project::countLanguages();
+$counttranslations = Project::countTranslations();
+$countprojects = Project::all()->count();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +25,13 @@
     </div>
 </div>
 
-{{ Theme::partial('footer') }}
+{{ Theme::partial('footer',
+array(
+'countlanguages' => $countlanguages,
+'counttranslations' => $counttranslations,
+'countprojects' => $countprojects,
+)
+) }}
 
 {{ Theme::asset()->container('footer')->scripts() }}
 </body>

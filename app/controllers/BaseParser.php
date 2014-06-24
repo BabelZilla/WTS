@@ -13,12 +13,7 @@ class BaseParser
 
     public function __construct()
     {
-        /*if (!$SDK) {
-            $sdk_path = $mosConfig_absolute_path . '/ipb_sdk/';
-            require_once($sdk_path . 'ipbsdk_class.inc.php');
-            $SDK = new IPBSDK();
-        }
-        $this->SDK = $SDK;*/
+
     }
 }
  

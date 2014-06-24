@@ -17,10 +17,15 @@ class MozPropertiesParser extends BaseParser
 
     public function Parse($filename, $pluralCount = 2, $sdk = 0)
     {
-        unset($this->result);
-        if (!file_exists($filename)) {
-            return false;
+        if (empty($filename)) {
+            throw new \Exception('MozPropertiesParser: File not defined.');
+        } elseif (file_exists($filename) === false) {
+            throw new \Exception('MozPropertiesParser: File does not exists: "' . htmlspecialchars($filename) . '"');
+        } elseif (is_readable($filename) === false) {
+            throw new \Exception('MozPropertiesParser: File is not readable: "' . htmlspecialchars($filename) . '"');
         }
+
+        unset($this->result);
         $lines = file($filename);
         foreach ($lines as $line) {
             $line = trim($line);
@@ -45,7 +50,7 @@ class MozPropertiesParser extends BaseParser
                 }
                 preg_match("/^(.*)\[(zero|one|two|few|many|other)\]$/", $key, $matches);
                 if ($matches) {
-                    //print_r($matches);
+
                     $ret[$matches[1]][$matches[2]] = $value;
                     // It's possible to omit [other] plural, so we check again
                     // if we already have an entity with that name and reload it

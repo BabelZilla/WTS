@@ -15,11 +15,14 @@
 {
 	//return View::make('hello');
 });*/
+Route::get('test', 'TestController@test');
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
 Route::get('projects/', array('as' => 'projectlist', 'uses' => 'ProjectController@index'));
 Route::get('projects/delete', 'ProjectController@deleteAll');
 Route::get('project/upload', array('as' => 'projectupload', 'uses' => 'ProjectController@upload'));
 Route::post('project/upload', array('as' => 'importrepo', 'uses' => 'ProjectController@importrepo'));
+Route::get('project/{id}/edit', array('before' => 'auth|maintainer', 'as' => 'editupload', 'uses' => 'ProjectController@editUpload'));
+Route::post('project/{id}/edit', array('before' => 'auth|maintainer', 'as' => 'edituploadpost', 'uses' => 'ProjectController@editUploadpost'));
 Route::get('project/{id}/language/{lang}/translate/{file}/show/{show}/page/{page}', array('as' => 'translatefile', 'uses' => 'ProjectController@translate'));
 Route::get('project/{id}/language/{lang}/filelist', array('as' => 'projectfilelist', 'uses' => 'ProjectController@filelist'));
 Route::get('project/{id}', array('as' => 'project', 'uses' => 'ProjectController@show'));
@@ -51,10 +54,8 @@ Route::post('user/forgot_password', 'UserController@do_forgot_password');
 Route::get('user/reset_password/{token}', 'UserController@reset_password');
 Route::post('user/reset_password', 'UserController@do_reset_password');
 Route::get('user/logout', array('as' => 'logout', 'uses' => 'UserController@logout'));
-Route::get('user/profile/{id?}', array('as' => 'profile', 'uses' => 'UserController@profile'));
+Route::get('user/profile/{id?}', array('before' => 'auth', 'as' => 'profile', 'uses' => 'UserController@profile'));
 Route::get('user/settings', array('as' => 'settings', 'uses' => 'UserController@settings'));
-Route::any('user/oauth2callback', array('as' => 'googlelogin', 'uses' => 'UserController@loginWithGoogle'));
-Route::get('user/testmail', 'UserController@testmail');
 
 /* Dashboard routes */
 Route::get('user/dashboard/edit/project/{id}', array('as' => 'editproject', 'uses' => 'DashboardController@editproject'));
@@ -68,6 +69,8 @@ Route::post('project/ajax/suggestions', array('as' => 'ajaxsuggestions', 'uses' 
 Route::post('project/ajax/save', array('as' => 'ajaxsave', 'uses' => 'AjaxController@save'));
 Route::get('project/ajax/parse', array('as' => 'ajaxparse', 'uses' => 'AjaxController@parse'));
 Route::post('project/ajax/versions', array('as' => 'ajaxversions', 'uses' => 'AjaxController@versions'));
+Route::get('ajax/getlocales/{language}', 'AjaxController@getlocales');
+Route::post('user/settings/save', 'AjaxController@saveusersettings');
 /* Static pages */
 Route::get('about', array('as' => 'about', 'uses' => 'PageController@about'));
 Route::get('terms', array('as' => 'terms', 'uses' => 'PageController@terms'));
@@ -83,8 +86,11 @@ Route::get('projects/repos', array('as' => 'repos', 'uses' => 'RepoController@in
 Route::get('kitchen-sink', array('as' => 'sink', 'uses' => 'PageController@kitchensink'));
 // Transvision search
 Route::any('transvision', array('as' => 'transvision', 'uses' => 'TransvisionController@search'));
+Route::group(array('before' => 'auth'), function () {
+    Route::controller('translations', 'Barryvdh\TranslationManager\Controller');
+});
 
 // 404 Page
-App::missing(function ($exception) {
+/*App::missing(function ($exception) {
     return Response::view('site.error.404', array(), 404);
-});
+});*/

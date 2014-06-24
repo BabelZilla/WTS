@@ -1,14 +1,12 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Confide Controller Template
-|--------------------------------------------------------------------------
-|
-| This is the default Confide controller template for controlling user
-| authentication. Feel free to change to your needs.
-|
-*/
+use ICanBoogie\CLDR\Provider,
+    ICanBoogie\CLDR\RunTimeCache,
+    ICanBoogie\CLDR\FileCache,
+    ICanBoogie\CLDR\Retriever,
+    ICanBoogie\CLDR\Repository,
+    ICanBoogie\CLDR\LocalizedDateTime,
+    ICanBoogie\DateTime;
 
 class UserController extends BaseController
 {
@@ -16,17 +14,6 @@ class UserController extends BaseController
     public function __construct()
     {
         parent::__construct();
-    }
-
-    public function testmail()
-    {
-        $data = array();
-        $message = 'Only a test';
-        Mail::send(array('emails.wts.devrequest.html', 'emails.wts.devrequest.txt'), $data, function ($message) {
-            $message->subject('Message Subject');
-            $message->from('noreply@babelzilla.org', 'BabelZilla');
-            $message->to('juergen.berg@gmail.com', 'John Smith')->subject('Welcome!');
-        });
     }
 
     /**
@@ -139,6 +126,13 @@ class UserController extends BaseController
             // caught by the authentication filter IE Redirect::guest('user/login').
             // Otherwise fallback to '/'
             // Fix pull #145
+            // If the session 'loginRedirect' is set, then redirect
+            // to that route. Otherwise redirect to '/'
+            $r = Session::get('loginRedirect');
+            if (!empty($r)) {
+                Session::forget('loginRedirect');
+                return Redirect::to($r);
+            }
             return Redirect::intended('/'); // change it to '/admin', '/dashboard' or something
         } else {
             $user = new User;
@@ -226,9 +220,9 @@ class UserController extends BaseController
                 'label' => 'Home',
                 'url' => '/'
             ),
-            'label' => 'Reset password',
+            'label' => Trans('user.resetpassword'),
         ));
-        $this->theme->setTitle('Reset password');
+        $this->theme->setTitle(Trans('user.resetpassword'));
         return $this->theme->of(Config::get('confide::reset_password_form'), $view)->render();
     }
 
@@ -268,74 +262,29 @@ class UserController extends BaseController
         return Redirect::to('/');
     }
 
-    public function loginWithGoogle()
-    {
-
-        // get data from input
-        $code = Input::get('code');
-
-        // get google service
-        $googleService = OAuth::consumer('Google');
-
-        // check if code is valid
-
-        // if code is provided get user data and sign in
-        if (!empty($code)) {
-
-            // This was a callback request from google, get the token
-            $token = $googleService->requestAccessToken($code);
-
-            // Send a request with it
-            $result = json_decode($googleService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
-
-            $message = ':-) Your unique Google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
-            echo $message . "<br/>";
-            $user = \User::where('email', '=', $result['email'])->get();
-            //$this->create($data);
-            print_r($user);
-            $data = array(
-                'email' => $result['email'],
-                'given_name' => $result['given_name'],
-                'family_name' => $result['family_name']
-            );
-            //return Redirect::route('registeruser');
-            //->with('data', $data);
-            if (!$user) {
-                $data = array(
-                    'email' => $result['email'],
-                    'given_name' => $result['given_name'],
-                    'family_name' => $result['family_name']
-                );
-                print_r($data);
-                $this->create($data);
-            }
-            //Var_dump
-            //display whole array().
-            dd($result);
-
-
-        } // if not ask for permission first
-        else {
-            // get googleService authorization
-            $url = $googleService->getAuthorizationUri();
-
-            // return to facebook login url
-            return Redirect::to((string)$url);
-        }
-    }
 
     public function settings()
     {
 
-        $view = array('name' => 'BZ');
         $this->theme->breadcrumb()->add(array(
             array(
                 'label' => 'Home',
                 'url' => '/'
             ),
-            array('label' => 'Your settings')
+            array('label' => Trans('user.yoursettings'))
         ));
-        // home.index will look up the path 'app/views/home/index.php'
+        $user = $this->user;
+        $timezoneselect = WtsHelper::getHtmlTimeZoneDropDown($this->usersettings['timezone']);
+        $langselect = WtsHelper::getHtmlLangAvailDropDown($this->usersettings['locale']);
+        $dateselect = WtsHelper::getHtmlDateSelectDropDown($this->usersettings['dateformat']);
+        $licenseselect = WtsHelper::getHtmlLicenseDropdown($this->usersettings['license']);
+
+        $view = array('timezoneselect' => $timezoneselect,
+            'langselect' => $langselect,
+            'dateselect' => $dateselect,
+            'licenseselect' => $licenseselect,
+        );
+        $this->theme->asset()->container('footer')->add('usettings_js', 'themes/babelzilla/assets/js/usersettings.js');
         return $this->theme->of('user.settings', $view)->render();
     }
 
@@ -343,13 +292,27 @@ class UserController extends BaseController
     {
         if (!$id) $id = Auth::user()->id;
         $user = User::find($id);
-        $profile = $user->Profile()->get();
-        $profiles = $user->profiles()->get();
+        $profile = $user->Profile()->get()->first();
+        /*$queries = DB::getQueryLog();
+        $last_query = end($queries);
+        print_r($last_query);*/
         $projects = $user->Project()->count();
         $translations = $user->Translations()->count();
-        $languages = $user->Languages()->get();
+        $langs = $user->Languages()->get()->all();
+        $provider = new Provider
+        (
+            new RunTimeCache(new FileCache(app_path() . '/cldr_cache')),
+            new Retriever
+        );
+        $repository = new Repository($provider);
+        $locale = $repository->locales[App::getLocale()];
+        //print_r($locale['languages']);
+        foreach ($langs as $language) {
+            $languages[] = array('language' => $locale['languages'][$language->language],
+                'level' => $language->level);
+        }
         $view = array('user' => $user,
-            'profile' => $profile[0],
+            'profile' => $profile,
             'projects' => $projects,
             'translations' => $translations,
             'languages' => $languages,
@@ -359,10 +322,10 @@ class UserController extends BaseController
                 'label' => 'Home',
                 'url' => '/'
             ),
-            array('label' => 'Your profile')
-        )); // home.index will look up the path 'app/views/home/index.php'
+            array('label' => Trans('user.profile'))
+        ));
 
-        $this->theme->setTitle('Profile view');
+        $this->theme->setTitle(Trans('user.profileview'));
         return $this->theme->of('user.profile', $view)->render();
     }
 }

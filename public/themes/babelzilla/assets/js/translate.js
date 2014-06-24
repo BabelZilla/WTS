@@ -1,10 +1,9 @@
 var $jq = jQuery.noConflict();
 $jq(document).ready(function () {
-    console.log(hello);
     $jq('body').on('click', '.btndel',
         function (event) {
             event.preventDefault();
-            bootbox.confirm("<h5>Are you sure that you want to delete the translation?</h5>", function (result) {
+            bootbox.confirm("<h5>" + deletestring + "</h5>", function (result) {
                 if (result != false) {
                     deletesuggest
                 }
@@ -75,20 +74,20 @@ $jq(document).ready(function () {
         })
     });
 
-    $jq('body').on('click', '.msuggest', function () {
+    $jq('body').on('click', '.msuggest', function (event) {
+        var currentId = $jq(this).data('oid');
         var context = $jq(this).data('context');
-        $jq('#myModalLabel').text('Suggestions for: ' + context);
-        $jq('.modal-body').load('/project/ajax/suggestions',
-            {
-                "context": context,
-                "project": project,
-                "file": file,
-                "language": language,
-                "ofile": ofile
-            }, function (result) {
-                $jq('#savebtn').show();
-                $jq('#sModal').foundation('reveal', 'open');
-            })
+        if (!$jq(this).hasClass('disabled')) {
+            $jq('#com-' + currentId).load('/project/ajax/suggestions',
+                {
+                    "context": context,
+                    "project": project,
+                    "file": file,
+                    "language": language,
+                    "ofile": ofile
+                });
+            $jq('#com-' + currentId).toggle("slow");
+        }
     });
 
     $jq('body').on('click', '.mpreview', function () {
@@ -110,24 +109,23 @@ $jq(document).ready(function () {
     });
 
     $jq('body').on('click', '.mversions', function () {
-        $jq('#myModalLabel').text('Older versions');
+        var currentId = $jq(this).data('sid');
         var context = $jq(this).data('context');
         var versions = $jq(this).data('versions');
         var show = $jq(this).data('show');
-        $jq('.modal-body').load('/project/ajax/versions', {
-            "context": context,
-            "project": project,
-            "file": file,
-            "language": language,
-            "ofile": ofile,
-            "versions": versions,
-            "show": show
-        }, function (result) {
-            $jq('#savebtn').hide();
-            $jq('#newbtn').hide();
-            $jq('#deletebtn').hide();
-            $jq('#sModal').foundation('reveal', 'open');
-        })
+        if (!$jq(this).hasClass('disabled')) {
+            $jq('#com-' + currentId).load('/project/ajax/versions',
+                {
+                    "context": context,
+                    "project": project,
+                    "file": file,
+                    "language": language,
+                    "ofile": ofile,
+                    "versions": versions,
+                    "show": show
+                });
+            $jq('#com-' + currentId).toggle("slow");
+        }
     });
 
     $jq('textarea').autosize()
@@ -141,11 +139,12 @@ $jq(document).ready(function () {
         $jq.ajax({
             type: "POST",
             url: '/project/ajax/save',
-            data: 'itemValue=' + itemValue + '&itemName=' + itemName + '&QuesID=' + QuesID + '&typeID=' + typeID + '&project=' + project + '&fileId=' + file + '&language=' + language + '&pluralrule=' + pluralrule + '&plural=' + plural + '&ofile=' + ofile,
+            data: 'itemValue=' + itemValue + '&itemName=' + itemName + '&QuesID=' + QuesID + '&typeID=' + typeID + '&project=' + project + '&fileId=' + file + '&language=' + language + '&plural=' + plural + '&ofile=' + ofile,
             success: function (msg) {
                 var data = JSON.parse(msg);
-                alert(data.id);
-                $jq('#row-' + data.id).replaceWith(data.row);
+                alert(data.change);
+                $jq('#row-' + data.id).removeClass('status-untranslated').addClass(data.change)
+                //$jq('#row-' + data.id).replaceWith(data.row);
             }
         })
     });

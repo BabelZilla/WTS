@@ -31,15 +31,16 @@ class MozWebAppImporter extends BaseImporter implements Importer
     public $wd;
     private $sections;
 
-    function __construct($project_id = null)
+    function __construct($project_id = 0)
     {
         parent::__construct();
         error_reporting(E_ERROR);
         ini_set('display_errors', 1);
 
-        if ($project_id) {
+        if ($project_id > 0) {
             $this->project = $this->getProject($project_id);
             $this->manifest = json_decode($this->project->webapp_manifest, true);
+            $this->isUpdate = true;
         }
         $this->user_id = Auth::user()->id;
         $this->uploadPath = Config::Get('wts.uploadFolder') . $this->user_id . '/';
@@ -54,6 +55,7 @@ class MozWebAppImporter extends BaseImporter implements Importer
 
     public function import($strWorkingDir, $fromRepo = false, $remoteUrl = false)
     {
+
         if (!$fromRepo) {
             $this->workingDir = $this->uploadPath . $strWorkingDir . '/';
             $xpiname = rtrim($strWorkingDir, '_extract');
@@ -63,17 +65,17 @@ class MozWebAppImporter extends BaseImporter implements Importer
         if (!$this->project) {
             // Yes, it's a new project...
             $this->isUpdate = false;
-            $this->messages[] = '<div class="alert alert-warning" style="margin: 20px 0 0; text-align: center;">No project found<br/>Will create a new one.</div>';
+            $this->messages[] = '<div class="alert alert-warning" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.projectnotfound') . '</div>';
             $this->project = new Project();
             $this->project->user_id = $this->user_id;
         } else {
             // No, it's already on the site, so check permissions of the uploader...
-            if (!$this->project->isMaintainer(12)) {
+            if (!$this->project->isMaintainer($this->user_id)) {
                 // The uploader is not a Maintainer of this project, so we stop here with a message.
                 Utils::RecursiveDelete($strWorkingDir);
                 $this->status = 'error';
                 $this->error = 'unauthorized';
-                $this->messages[] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">You don\'t have the permission to update this project.</div>';
+                $this->messages[] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.permissiondenied') . '</div>';
                 return false;
             }
         }
@@ -84,18 +86,21 @@ class MozWebAppImporter extends BaseImporter implements Importer
         if (!$this->parseWebAppManifest($strWorkingDir)) {
             $this->status = 'error';
             $this->error = 'Manifest not found';
-            $this->messages[] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">Failed to get webapp.manifest</div>';
+            $this->messages[] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.manifestnotfound') . '</div>';
             // No manifest data, something is wrong
             Utils::RecursiveDelete($strWorkingDir);
             return false;
         } else {
-            $this->messages[] = '<div class="alert alert-success" style="margin: 20px 0 0; text-align: center;">Found webapp.manifest</div>';
+            $this->messages[] = '<div class="alert alert-success" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.manifestfound') . '</div>';
         }
         $this->project->root_path = dirname($this->manifestPath);
 
         if ($fromRepo) {
             $this->project->remote_Url = $remoteUrl;
-            $this->project->repo_path = str_replace($this->RepoPath, '', $strWorkingDir);
+            $repoinfo = pathinfo($remoteUrl);
+            $this->project->gituser = basename($repoinfo['dirname']);
+            $this->project->gitproject = $repoinfo['filename'];
+            $this->project->repo_path = basename($strWorkingDir);
             $this->project->path = str_replace($this->RepoPath, '', $strWorkingDir);
         } else {
             $this->project->path = str_replace($this->uploadPath, '', $strWorkingDir);
@@ -130,33 +135,29 @@ class MozWebAppImporter extends BaseImporter implements Importer
                 $xpifile->filename = $xpiname;
                 $xpifile->Save();
             }
-            // Save it again to add the id to slug
-            $this->project->slug = $this->project->generateUniqueSlug();
             $this->project->save();
             $this->status = 'success';
             if ($this->isUpdate) {
-                $this->messages[] = '<div class="alert alert-success" style="margin: 20px 0 0; text-align: center;">Project <b>"' . $this->project->name . '"</b> will be updated.</div>';
+                $this->messages[] = '<div class="alert alert-success" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.projectupdate', array('projectname' => $this->project->name)) . '</div>';
             } else {
-                $this->messages[] = '<div class="alert alert-success" style="margin: 20px 0 0; text-align: center;">A new project named <b>"' . $this->project->name . '"</b> has been created.</div>';
+                $this->messages[] = '<div class="alert alert-success" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.newproject', array('projectname' => $this->project->name)) . '</div>';
             }
         } else {
             $this->status = 'error';
-            $this->messages[] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">Failed to create <b>"' . $this->project->name . '"</b></div>';
+            $this->messages[] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.createfailed', array('projectname' => $this->project->name)) . '</div>';
             $this->error = $this->project->getErrors();
         }
         if (isset($this->manifest['default_locale'])) {
             $this->defaultLocale = $this->manifest['default_locale'];
-            $this->messages[] = '<div class="alert alert-info" style="margin: 20px 0 0; text-align: center;">Detected default locale: ' . $this->defaultLocale . '</div>';
+            $this->messages[] = '<div class="alert alert-info" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.detecteddefaultlocales', array('defaultlocale' => $this->defaultLocale)) . '</div>';
         } else {
-            $this->messages[] = '<div class="alert alert-warning" style="margin: 20px 0 0; text-align: center;">No default locale found, setting ' . $this->defaultLocale . ' as default</div>';
+            $this->messages[] = '<div class="alert alert-warning" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.nodefaultlocale', array('defaultlocale' => $this->defaultLocale)) . '</div>';
         }
         $this->project->source_language = $this->defaultLocale;
         $this->project->save();
 
         $this->getL10nResourceLinks($strWorkingDir);
-        $this->messages[] = '<div class="alert alert-info" style="margin: 20px 0 0; text-align: center;">Number of found ressources: ' . count(
-                $this->L10nResources
-            ) . '</div>';
+        $this->messages[] = '<div class="alert alert-info" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.numberresources', array('countres' => count($this->L10nResources))) . '</div>';
         $notfound = 0;
         foreach ($this->L10nResources as $ini) {
             $iniResult = $this->parseIniStr($ini);
@@ -164,13 +165,13 @@ class MozWebAppImporter extends BaseImporter implements Importer
             if (!$iniResult) {
                 $notfound++;
                 if (count($this->L10nResources) == $notfound) {
-                    $this->messages[] = '<div class="alert alert-warning" style="margin: 20px 0 0; text-align: center;">L10n resource not found: ' . $ini . '</div>';
-                    $this->messages[] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">No L10n resources found</div>';
+                    $this->messages[] = '<div class="alert alert-warning" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.resourcenotfound', array('ini' => $ini)) . '</div>';
+                    $this->messages[] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporternoresourcesfound') . '</div>';
                     $this->error = 'No resources found';
                     $this->status = 'error';
                     return false;
                 } else {
-                    $this->messages[] = '<div class="alert alert-warning" style="margin: 20px 0 0; text-align: center;">L10n resource not found: ' . $ini . '</div>';
+                    $this->messages[] = '<div class="alert alert-warning" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.resourcenotfound', array('ini' => $ini)) . '</div>';
                 }
             } else {
                 $ini = str_replace($this->workingDir, '', $ini);
@@ -484,9 +485,6 @@ class MozWebAppImporter extends BaseImporter implements Importer
 
     function CreateTranslationfiles()
     {
-        if (array_key_exists($this->project->source_language, $this->ShortLocales)) {
-            $longLocale = $this->ShortLocales[$this->project->source_language];
-        }
         $of = $this->project->originalFiles()->where('is_virtual', '=', 0)->where('active', '=', 1)->get();
         $ts = $this->project->translationssets()->get();
 
@@ -499,24 +497,19 @@ class MozWebAppImporter extends BaseImporter implements Importer
                         $parts
                     ) - 2] = $translation->locale;
                 }
-                if ($parts[count($parts) - 2] === $longLocale) {
-                    $parts[count($parts) - 2] = $translation->locale;
-                }
                 $newfile = implode('.', $parts);
                 $pathparts = explode('/', $ofile->file_path);
-
                 foreach ($pathparts as $key => $value) {
+                    $underscore = str_replace('-', '_', $this->project->source_language);
                     if ($this->project->source_language == $value) {
                         $newpathparts[] = $translation->locale;
-                    } elseif
-                    ($longLocale == $value
-                    ) {
-                        $newpathparts[] = $translation->locale;;
+                    } elseif ($underscore == $value) {
+                        $newpathparts[] = str_replace('-', '_', $translation->locale);
                     } else {
                         $newpathparts[] = $value;
                     }
                 }
-                $newpath = WtsHelper::gp_add_slash(implode('/', $newpathparts));
+                $newpath = WtsHelper::gp_add_slash(dirname(implode('/', $newpathparts)));
                 $translationfile = $ofile->TranslatedFiles()
                     ->where('translation_set', '=', $translation->translationset_id)
                     ->first();
@@ -569,8 +562,8 @@ class MozWebAppImporter extends BaseImporter implements Importer
                 }
             }
         }
-        $this->messages[] = '<div class="alert alert-success" style="margin: 20px 0 0; text-align: center;">Locales found: ' . implode(
-                ', ',
+        $this->messages[] = '<div class="alert alert-success" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.localesfound') . ' ' . implode(
+            ', ',
                 $sections
             ) . '</div>';
         return true;
@@ -680,7 +673,7 @@ class MozWebAppImporter extends BaseImporter implements Importer
             }
         } else {
             $this->status = 'error';
-            $this->messages[] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">No locale files found<br>Please check your uploaded file.</div>';
+            $this->messages[] = '<div class="alert alert-error" style="margin: 20px 0 0; text-align: center;">' . Trans('appimporter.nolocalefiles') . '</div>';
             return false;
         }
         if ($originals) {
@@ -967,14 +960,20 @@ class MozWebAppImporter extends BaseImporter implements Importer
             if (array_key_exists($ext, $this->Parsers)) {
                 $parser = $this->Parsers[$ext];
                 $parser = new $parser();
-                $toOpen = WtsHelper::removeDoubleSlashes(
-                    $this->uploadPath . $this->project->path . $fpath . '/' . $tfile->file_name
-                );
-                if (!file_exists($toOpen)) {
-                    //echo "Not found: ".$toOpen."<br>";
+                if ($this->project->repo_path == '') {
+                    $toOpen = WtsHelper::removeDoubleSlashes(
+                        $this->uploadPath . $this->project->path . $tfile->file_path . $tfile->file_name
+                    );
+                } else {
+                    $toOpen = WtsHelper::removeDoubleSlashes(
+                        $this->RepoPath . $this->project->path . $tfile->file_path . $tfile->file_name
+                    );
                 }
-                //echo $toOpen."<br>";
-                $filedata = $parser->Parse($toOpen, 2);
+                try {
+                    $filedata = $parser->Parse($toOpen, 2);
+                } catch (Exception $e) {
+                    return false;
+                }
             }
             foreach ($filedata as $entity) {
                 //print_r($entity);
@@ -1029,86 +1028,5 @@ class MozWebAppImporter extends BaseImporter implements Importer
         }
     }
 
-    function tests()
-    {
-        $originals = $this->project->originalFiles()
-            ->where('active', '=', 1)
-            ->where('is_virtual', '=', 0)
-            ->get();
-        foreach ($originals as $original) {
-            $origStrings = $original->originalStrings()
-                ->where('status', '<>', 'old')
-                ->get();
-            //echo "COUNT:".count($origStrings);
-            //print_r($origStrings);
-            $tfiles = $original->TranslatedFiles()
-                ->where('status', '<>', 'removed')
-                ->where('active', '=', 1)
-                ->get();
-            foreach ($tfiles as $tfile) {
-                $ext = pathinfo($tfile->file_name, PATHINFO_EXTENSION);
-                if (array_key_exists($ext, $this->Parsers)) {
-                    $parser = $this->Parsers[$ext];
-                    $parser = new $parser();
-                    $toOpen = WtsHelper::removeDoubleSlashes(
-                        $this->uploadPath . $this->project->path . $tfile->file_path . $tfile->file_name
-                    );
-                    if (file_exists($toOpen)) {
-                        echo "Yes<br>";
-                    }
-                    $filedata = $parser->Parse($toOpen, 2);
-                }
-                foreach ($filedata as $entity) {
-                    //print_r($entity);
-                    $oStr = $original->originalStrings()
-                        ->where('context', '=', $entity->Key)
-                        ->first();
-                    if ($oStr) {
-                        if ($oStr->status <> 'old') {
-                            $translatedStr = $oStr->translatedStrings()
-                                ->where('language', '=', $tfile->language)
-                                ->first();
-                            $isNew = false;
-                            if (!$translatedStr) {
-                                $translatedStr = new TranslatedString();
-                                $translatedStr->project_id = $this->project->project_id;
-                                $translatedStr->original_id = $oStr->id;
-                                $translatedStr->original_file = $original->file_id;
-                                $translatedStr->translation_set_id = 1;
-                                $translatedStr->language = $tfile->language;
-                                $translatedStr->status = 'new';
-                                $isNew = true;
-                            }
-                            $translatedStr->context = $entity->Key;
-                            $translatedStr->zero = $entity->zero;
-                            $translatedStr->one = $entity->one;
-                            $translatedStr->two = $entity->two;
-                            $translatedStr->few = $entity->few;
-                            $translatedStr->many = $entity->many;
-                            $translatedStr->other = $entity->other;
-                            $translatedStr->user_id = $this->user_id;
-                            if (!$isNew) {
-                                if ($translatedStr->md5_hash != md5(
-                                        $entity->zero . $entity->one . $entity->two . $entity->few . $entity->many . $entity->other
-                                    )
-                                ) {
-                                    $translatedStr->status = 'changed';
-                                }
-                            }
-                            $translatedStr->md5_hash = md5(
-                                $entity->zero . $entity->one . $entity->two . $entity->few . $entity->many . $entity->other
-                            );
-                            $translatedStr->save();
-                        } else {
-                            echo "<b>$entity->Key is outdated<br>";
-                        }
-                        //print_r($oStr);
-                    } else {
-                        echo "Skipping $entity->Key<br>";
-                    }
-                }
-            }
-        }
-    }
 }
  

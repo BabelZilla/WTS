@@ -55,7 +55,7 @@ class Githelper
         $this->conf['summary_tags'] = 10;
 
         // Whether to show remote labels on shortlog
-        $this->conf['shortlog_remote_labels'] = false;
+        $this->conf['shortlog_remote_labels'] = true;
 
         // Allow checking out projects via "git clone"
         $this->conf['allow_checkout'] = true;

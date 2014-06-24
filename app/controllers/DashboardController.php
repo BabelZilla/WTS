@@ -16,12 +16,17 @@ class DashboardController extends BaseController
     public function Index()
     {
         $uid = Auth::user()->id;
-        $projects = User::find($uid)->Project();
-        $translations = User::find($uid)->Translations();
+        $user = Auth::user();
+        $projects = $user->Project()->get();
+        /*      $queries = DB::getQueryLog();
+                $last_query = end($queries);
+                print_r($last_query);
+        */
+        $translations = $user->Translations()->get();
         $client = new \Github\Client(
             new \Github\HttpClient\CachedHttpClient(array('cache_dir' => '../github-api-cache'))
         );
-        $repositories = $client->api('user')->repositories('TheoChevalier');
+        $repositories = $client->api('user')->repositories(Auth::user()->gituser);
         foreach ($repositories as $repo) {
             $repos[$repo['clone_url']] = $repo['name'];
         }
@@ -34,12 +39,12 @@ class DashboardController extends BaseController
         );
         $this->theme->breadcrumb()->add(array(
             array(
-                'label' => 'Home',
+                'label' => Trans('wts.home'),
                 'url' => '/'
             ),
             array(
-                'label' => 'Dashboard',
-                'url' => 'http://...'
+                'label' => Trans('dashboard.dashboard'),
+                'url' => ''
             )
         ));
         // home.index will look up the path 'app/views/home/index.php'
@@ -50,18 +55,17 @@ class DashboardController extends BaseController
     public function Editproject($id)
     {
         $this->beforeFilter('maintainer');
-        $project = Project::find($id);
-        if (!$project) App::abort(404, 'The requested project does not exist.');
+        $project = $this->getProject($id);
         $view = array(
             'project' => $project,
         );
         $this->theme->breadcrumb()->add(array(
             array(
-                'label' => 'Home',
+                'label' => Trans('wts.home'),
                 'url' => '/'
             ),
             array(
-                'label' => 'Dashboard',
+                'label' => Trans('dashboard.dashboard'),
                 'url' => route('dashboard'),
             ),
             array('label' => $project->name),

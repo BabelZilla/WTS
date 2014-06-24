@@ -17,9 +17,6 @@ class BaseImporter
 
     public $SDK;
 
-    /**
-     *
-     */
     public function __construct()
     {
 

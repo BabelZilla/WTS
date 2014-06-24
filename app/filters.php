@@ -6,9 +6,16 @@ Route::filter("auth", function () {
     }
 });
 
-Route::filter('maintainer', function () {
-        if (!Project::find(Input::get('id'))->isMaintainer(Auth::user()->id)) {
-            return Response::error('401');
+Route::filter('maintainer', function ($route) {
+
+        $id = $route->getParameter('id');
+        if (is_numeric($id)) {
+            $project = Project::find($id);
+        } else {
+            $project = Project::where('slug', '=', $id)->first();
+        }
+        if (!$project->isMaintainer(Auth::user()->id)) {
+            App::abort(401, 'Unauthorized action.');
         }
     }
 );

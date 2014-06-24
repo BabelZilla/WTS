@@ -66,6 +66,8 @@ return array(
                 $theme->asset()->add('dataTablesF_css', 'themes/babelzilla/assets/css/dataTables.foundation.css');
                 $theme->asset()->add('awesome_css', 'themes/babelzilla/assets/css/font-awesome.css');
                 $theme->asset()->add('style_css', 'themes/babelzilla/assets/css/style.css');
+                $theme->asset()->add('octicon_icons', 'themes/babelzilla/assets/fonts/octicons.css');
+
                 // Partial composer.
                 // $theme->partialComposer('header', function($view)
                 // {

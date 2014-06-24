@@ -4,17 +4,17 @@ class BaseController extends Controller
 {
 
     public $theme;
-    public $SDK;
+    public $user;
+    public $usersettings;
 
     function __construct()
     {
-        //echo __DIR__;
-        /*if (!$this->SDK) {
-            $sdk_path = '/var/www/virtual/babelzilla.org/htdocs/ipb_sdk/';
-            require_once($sdk_path . 'ipbsdk_class.inc.php');
-            $this->SDK = new IPBSDK();
-        }*/
-        //$this->SDK = $SDK;
+        if (Auth::Check()) {
+            $this->user = Auth::User();
+            $this->usersettings = unserialize($this->user->settings);
+        }
+        $lang = WtsHelper::getLanguage(Config::Get('wts.appLanguages'));
+        if ($lang) App::setLocale($lang);
         $this->theme = Theme::uses('babelzilla')->layout('default');
         $this->theme->asset()->container('footer')->add('modernizr_js', 'themes/babelzilla/assets/js/vendor/modernizr.js');
         $this->theme->asset()->container('footer')->add('jquery_js', 'themes/babelzilla/assets/js/vendor/jquery.js');
@@ -71,7 +71,6 @@ class BaseController extends Controller
     public function getProject($id)
     {
         if (is_numeric($id)) {
-            echo "NUM";
             $project = Project::find($id);
         } else {
             $project = Project::where('slug', '=', $id)->first();

@@ -29,14 +29,19 @@ return array(
     ),
 
     /* Rules to override User saving validation (e.g. with Ardent models), for example the password.  Set to NULL to use the default validation rules. */
-    'userrules' => array( //'password' => NULL,
+    'userrules' => array(
+        'password' => NULL,
     ),
 
     /* Specific things to set on new (unsaved) user models, provide a callable if you wish */
     'uservalues' => array(
-        // 'role_id' => 3,
-        // 'username' => function($user, $adapter_profile) {
-        //     return $adapter_profile->email;
-        // }
+        'confirmed' => 1,
+        'username' => function ($user, $adapter_profile) {
+                $username = preg_replace('/([^@]*).*/', '$1', $adapter_profile->email); // get everything before @ sign
+                $username = preg_replace("/[^a-zA-Z0-9]+/", "", $username); // remove everything except a-z, A-Z and 0-9
+                $userCount = count(User::where('username', 'LIKE', "$username%")->get());
+                return ($userCount > 0) ? $username . $userCount : $username;
+            }
     ),
+
 );

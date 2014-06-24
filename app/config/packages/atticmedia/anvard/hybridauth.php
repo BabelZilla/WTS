@@ -7,7 +7,7 @@ return array(
 
         "Google" => array(
             "enabled" => true,
-            "keys" => array("id" => "718047628024-6qcvv5epbnpprl8pfc6jgit1tm1uc7bt.apps.googleusercontent.com", "secret" => "W9FZlP4oAG0Xz7DZnUFN0DHl"),
+            "keys" => array("id" => "718047628024-qrced5arg5vcajpff1l1ago075fib8mi.apps.googleusercontent.com", "secret" => "hs3z5JHJD1LZ8gkVJ6UHxN5u"),
             "scope" => "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email" // optional
         ),
 
@@ -19,7 +19,7 @@ return array(
 
         'Twitter' => array(
             'enabled' => true,
-            'keys' => array('key' => 'Nz72yDqb00WWzaWd2OZ3mw', 'secret' => '5IPMNKGIA5OucwvMbnoC0cpHYbPfR2VlHQjeTtKRTxw')
+            'keys' => array('key' => 'ot5xVNcEJKHtWXUyG0gE0eOte', 'secret' => 'sTXqkUieFIp4b336zNK8LtL5vGl06wn5NhQnVpZf1QbpqEL0sH')
         ),
 
         'LinkedIn' => array(
@@ -28,8 +28,8 @@ return array(
         ),
 
         'GitHub' => array(
-            'enabled' => false,
-            'keys' => array('key' => 'd714a2e29cb3cd6f9592', 'secret' => 'a0e49e21bdddc13a899bfc69b1a13106e2f9b440')
+            'enabled' => true,
+            'keys' => array('id' => '29a5e6c3d2f2e85b985d', 'secret' => 'a2e39760cdb988db9154ffae954d172c65175e9e')
         ),
     )
 );

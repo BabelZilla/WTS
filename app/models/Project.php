@@ -61,7 +61,7 @@ class Project extends Eloquent
         $isMaintainer = DB::table('project_maintainer')
             ->where('project_id', '=', $this->project_id)
             ->where('user_id', '=', $user_id)
-            ->get();
+            ->first();
         if ($isMaintainer) {
             return true;
         } else {
@@ -69,18 +69,32 @@ class Project extends Eloquent
         }
     }
 
+    public static function countLanguages()
+    {
+        $languages = DB::table('translation_set')
+            ->select('locale', DB::raw('count(*) as total'))
+            ->groupBy('locale')
+            ->get();
+        return count($languages);
+    }
+
+    public static function countTranslations()
+    {
+        $translations = DB::table('translation_set')->count();
+        return $translations;
+    }
+
     public function isTranslator($language, $user_id)
     {
-        $sets = DB::table('translation_set')
+        $set = DB::table('translation_set')
             ->where('project_id', '=', $this->project_id)
             ->where('locale', '=', $language)
-            ->get();
-        $set = $sets[0];
+            ->first();
+
         $isTranslator = DB::table('translationset_member')
             ->where('translationset_id', '=', $set->translationset_id)
             ->where('user_id', '=', $user_id)
-            ->get();
-        $isTranslator = $isTranslator[0];
+            ->first();
         if ($isTranslator) {
             return $isTranslator->permissions;
         } else {
@@ -169,7 +183,14 @@ class Project extends Eloquent
                 'ŕ' => 'r',
             )
         );
-        return $this->url_title($string, $delimiter, true) . '-' . $this->user_id;
+        $slug = $this->url_title($string, $delimiter, true) . '-' . $this->user_id;
+        return $slug;
+    }
+
+    private function slugExists($slug)
+    {
+        $cnt = $this::where('slug', '=', $slug)->count();
+        return ($cnt > 0) ? true : false;
     }
 
     public function url_title($str, $separator = '-', $lowercase = false)
