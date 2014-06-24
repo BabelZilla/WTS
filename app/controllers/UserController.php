@@ -292,10 +292,10 @@ class UserController extends BaseController
     {
         if (!$id) $id = Auth::user()->id;
         $user = User::find($id);
-        $profile = $user->Profile()->get()->first();
-        /*$queries = DB::getQueryLog();
-        $last_query = end($queries);
-        print_r($last_query);*/
+        if (!$user) App::abort(404, 'The requested user does not exist.');
+
+        $profile = $user->Profile()->get();
+
         $projects = $user->Project()->count();
         $translations = $user->Translations()->count();
         $langs = $user->Languages()->get()->all();
