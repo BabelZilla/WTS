@@ -15,7 +15,7 @@
                     <h4>{{ $user['username'] }}
                         <span><?php echo $profile['title']; ?></span></h4>
 
-                    <p><i class="fi-mail"></i><span><?php echo $user['email'] ?></span></p>
+                    <p><i class="fi-mail"></i><span></span></p>
 
                     <p><i class="fi-social-twitter"></i>&#64;{{ $profile['twitter'] }}</p>
 

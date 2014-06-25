@@ -17,38 +17,53 @@ class TransvisionController extends \BaseController
 
     public function search()
     {
-        $client = new Client('http://transvision.mozfr.org/');
         $source_language = Input::Get('sourcelocale', 'en-US');
-        $locale = Input::Get('locale', 'fr');
+        $locale = Input::Get('locale', $this->usersettings['locale']);
         $repo = Input::Get('repo', 'release');
         $term = Input::Get('recherche', '');
-        $search_type = 'entities';
-        $perfect_match = Input::Get('perfect_match') ? '&perfect_match=perfect_match' : '';
-        $wild = Input::Get('wild') ? '&wild=wild' : '';
-        $case_sensitive = Input::Get('case_sensitive') ? '&case_sensitive=case_sensitive' : '';
-        $whole_word = Input::Get('whole_word') ? '&whole_word=whole_word' : '';
+        $searchtype = Input::Get('searchtype', 'entities');
+        $perfect_match = Input::Get('perfect_match') ? 1 : 0;
+        $case_sensitive = Input::Get('case_sensitive') ? 1 : 0;
+        $whole_word = Input::Get('whole_word') ? 1 : 0;
         $params = $perfect_match . $case_sensitive . $wild . $whole_word;
-        $request = $client->get("?sourcelocale=$source_language&locale=$locale&repo=$repo&recherche=$term$params&json");
-        $langs = file(app_path() . '/locales/' . $repo . '.txt');
-
+        $client = new Client();
+        $request = $client->get("http://transvision-beta.mozfr.org/api/v1/repositories/");
+        $response = $request->send();
+        $repos = json_decode($response->getBody());
+        foreach ($repos as $avrepo) {
+            $availRepos[] = WtsHelper::makeOption(ucfirst($avrepo), $avrepo);
+        }
+        $repo_html = WtsHelper::selectList($availRepos, 'repo', '', 'text', 'value', $repo);
+        $request = $client->get("http://transvision-beta.mozfr.org/api/v1/locales/$repo");
+        $response = $request->send();
+        $langs = json_decode($response->getBody());
+        foreach ($langs as $lang) {
+            $availLangs[] = WtsHelper::makeOption($lang, $lang);
+        }
+        $searchtypes[] = WtsHelper::makeOption('Entities', 'entities');
+        $searchtypes[] = WtsHelper::makeOption('Strings', 'strings');
+        $searchtypes[] = WtsHelper::makeOption('Both', 'all');
+        $st_html = WtsHelper::selectList($searchtypes, 'searchtype', '', 'text', 'value', $searchtype);
+        $sl_html = WtsHelper::selectList($availLangs, 'sourcelocale', '', 'text', 'value', $source_language);
+        $tl_html = WtsHelper::selectList($availLangs, 'locale', '', 'text', 'value', $locale);
+        $request = $client->get("http://transvision-beta.mozfr.org/api/v1/search/$searchtype/$repo/$source_language/$locale/$term/?case_sensitive=$case_sensitive&perfect_match=$perfect_match&whole_world=$whole_word");
         if ($term != "") {
             // Send the request and get the response
             $response = $request->send();
             $answer = json_decode($response->getBody());
         }
-        $availRepos = array('release' => 'Release', 'beta' => 'Beta', 'aurora' => 'Aurora', 'central' => 'Central', 'gaia' => 'Gaia-l10n',
-            'gaia_1_1' => 'Gaia 1.1', 'gaia_1_2' => 'Gaia 1.2', 'gaia_1_3' => 'Gaia 1.3',);
-        //'mozilla_org' => 'www.mozilla.org');
-
-        $repo_html = WtsHelper::getHtmlSelectOptions($availRepos, $repo, true);
-        $sl_html = WtsHelper::getHtmlSelectOptions($langs, $source_language, false);
-        $tl_html = WtsHelper::getHtmlSelectOptions($langs, $locale, false);
+        //print_r($answer);
         $view = array(
             'repo_html' => $repo_html,
             'sl_html' => $sl_html,
             'tl_html' => $tl_html,
+            'st_html' => $st_html,
             'answer' => $answer,
+            'term' => $term,
+            'source_language' => $source_language,
+            'locale' => $locale,
         );
+        $this->theme->asset()->container('footer')->add('transvision_js', 'themes/babelzilla/assets/js/transvision.js');
         $this->theme->setTitle($project->name);
         return $this->theme->of('project.transvision', $view)->render();
     }

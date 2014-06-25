@@ -584,6 +584,31 @@ class WtsHelper
         return $html;
     }
 
+    // functions from Transvision
+
+    /**
+     * Split a sentence in words from longest to shortest
+     *
+     * @param string $sentence
+     * @return array all the words in the sentence sorted by length
+     */
+    public static function uniqueWords($sentence)
+    {
+        $words = explode(' ', $sentence);
+        $words = array_filter($words); // filter out extra spaces
+        $words = array_unique($words); // remove duplicate words
+        // sort words from longest to shortest
+        usort(
+            $words,
+            function ($a, $b) {
+                return mb_strlen($b) - mb_strlen($a);
+            }
+        );
+
+        return $words;
+    }
+
+
     /**
      * Nicely format entities for tables by splitting them in subpaths and styling them
      *
@@ -600,19 +625,18 @@ class WtsHelper
             $entity = array_pop($chunk);
             $highlight = preg_quote($highlight, '/');
             $entity = preg_replace("/($highlight)/i", '<span class="highlight">$1</span>', $entity);
-            $entity = '<span class="red">' . $entity . '</span>';
+            $entity = '<span class="resred">' . $entity . '</span>';
         } else {
-            $entity = '<span class="red">' . array_pop($chunk) . '</span>';
+            $entity = '<span class="resred">' . array_pop($chunk) . '</span>';
         }
         // let's analyse the entity for the search string
         $chunk = explode('/', $chunk[0]);
-        $repo = '<span class="green">' . array_shift($chunk) . '</span>';
+        $repo = '<span class="resgreen">' . array_shift($chunk) . '</span>';
 
         $path = implode('<span class="superset">&nbsp;&sup;&nbsp;</span>', $chunk);
 
         return $repo . '<span class="superset">&nbsp;&sup;&nbsp;</span>' . $path . '<br>' . $entity;
     }
-
 
     public function createUrl($params)
     {
@@ -624,7 +648,48 @@ class WtsHelper
     }
 
     /**
-     * This method surrounds a searched term by â†â†’ so as to nbe used together
+     * Hightlight specific elements in the string for locales.
+     * Can also highlight specific per locale sub-strings.
+     * For example in French non-breaking spaces used in typography
+     *
+     * @param string $string Source text
+     * @param string $locale Optional. Locale code. Defaults to French.
+     * @return string Same string with specific sub-strings in span elements
+     * for styling with CSS (.hightlight-gray class)
+     */
+    public static function highlight($string, $locale = 'fr')
+    {
+        $replacements = array(
+            ' ' => '<span class="highlight-gray"> </span>',
+            '…' => '<span class="highlight-gray">…</span>',
+        );
+
+        switch ($locale) {
+            case 'fr':
+            default:
+                $replacements['&hellip;'] = '<span class="highlight-gray">…</span>'; // right ellipsis highlight
+                break;
+        }
+
+        return self::multipleStringReplace($replacements, $string);
+    }
+
+
+    /**
+     * Returns a string after replacing all the items provided in an array
+     *
+     * @param array $replacements List of replacements to do as :
+     * ['before1' => 'after1', 'before2' => 'after2']
+     * @param string $string The string to process
+     * @return string Processed string
+     */
+    public static function multipleStringReplace($replacements, $string)
+    {
+        return str_replace(array_keys($replacements), $replacements, $string);
+    }
+
+    /**
+     * This method surrounds a searched term by ←→ so as to nbe used together
      * with highlightString() and replace those by spans.
      *
      * @param string $needle The term we when to find and mark for highlighting
@@ -633,9 +698,9 @@ class WtsHelper
      */
     public static function markString($needle, $haystack)
     {
-        $str = str_replace($needle, 'â†' . $needle . 'â†’', $haystack);
-        $str = str_replace(ucwords($needle), 'â†' . ucwords($needle) . 'â†’', $str);
-        $str = str_replace(strtolower($needle), 'â†' . strtolower($needle) . 'â†’', $str);
+        $str = str_replace($needle, '←' . $needle . '→', $haystack);
+        $str = str_replace(ucwords($needle), '←' . ucwords($needle) . '→', $str);
+        $str = str_replace(strtolower($needle), '←' . strtolower($needle) . '→', $str);
 
         return $str;
     }
@@ -649,28 +714,29 @@ class WtsHelper
     public static function highlightString($str)
     {
         $str = preg_replace(
-            '/â†â†â†(.*)â†’â†’â†’/isU',
+            '/←←←(.*)→→→/isU',
             "<span class='highlight'>$1</span>",
             $str
         );
 
         $str = preg_replace(
-            '/â†â†(.*)â†’â†’/isU',
+            '/←←(.*)→→/isU',
             "<span class='highlight'>$1</span>",
             $str
         );
 
         $str = preg_replace(
-            '/â†(.*)â†’/isU',
+            '/←(.*)→/isU',
             "<span class='highlight'>$1</span>",
             $str
         );
 
         // remove last ones
-        $str = str_replace(['â†', 'â†’'], '', $str);
+        $str = str_replace(['←', '→'], '', $str);
 
         return $str;
     }
+
 
     static function getStatusList($selected, $idcode, $lang = 'english')
     {

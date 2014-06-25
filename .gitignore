@@ -1,5 +1,6 @@
+/app/config/app.php
 /app/config/database.php
-/app/config/packages/atticmedia/anvard/hybridauth.
+/app/config/packages/atticmedia/anvard/hybridauth.php
 /app/config/mail.php
 /bootstrap/compiled.php
 /vendor

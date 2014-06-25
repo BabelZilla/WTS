@@ -71,6 +71,7 @@ Route::get('project/ajax/parse', array('as' => 'ajaxparse', 'uses' => 'AjaxContr
 Route::post('project/ajax/versions', array('as' => 'ajaxversions', 'uses' => 'AjaxController@versions'));
 Route::get('ajax/getlocales/{language}', 'AjaxController@getlocales');
 Route::post('user/settings/save', 'AjaxController@saveusersettings');
+Route::post('transvision/ajax/getrepolocales', 'AjaxController@getrepolocales');
 /* Static pages */
 Route::get('about', array('as' => 'about', 'uses' => 'PageController@about'));
 Route::get('terms', array('as' => 'terms', 'uses' => 'PageController@terms'));

@@ -1,4 +1,7 @@
 <?php
+
+use Guzzle\Service\Client;
+
 class AjaxController extends BaseController
 {
 
@@ -6,6 +9,22 @@ class AjaxController extends BaseController
     {
         /* Only Ajax requests are allowed */
         $this->beforeFilter('ajax');
+    }
+
+    public function getrepolocales()
+    {
+        $repo = Input::Get('repo');
+        $client = new Client();
+        $request = $client->get("http://transvision-beta.mozfr.org/api/v1/locales/$repo");
+        $response = $request->send();
+        $langs = json_decode($response->getBody());
+        foreach ($langs as $lang) {
+            $availLangs[] = WtsHelper::makeOption($lang, $lang);
+        }
+        $ajaxresponse['source'] = WtsHelper::selectList($availLangs, 'sourcelocale', '', 'text', 'value', $source_language);
+        $ajaxresponse['target'] = WtsHelper::selectList($availLangs, 'locale', '', 'text', 'value', $locale);
+        $ajaxresponse = json_encode($ajaxresponse);
+        echo $ajaxresponse;
     }
 
     public function saveusersettings()
@@ -68,19 +87,19 @@ class AjaxController extends BaseController
         }
         if ($translationLastVersions) {
             foreach ($translationLastVersions as $t) {
-            $vars = array(
-                'entity' => $entity,
-                't' => $t,
-                'member_name' => $member_name,
-                'PluralRules' => $PluralRules
-            );
-            $versionHtml = $this->renderPhpToString('versions.php', $vars);
-            echo $versionHtml;
-        }
-        if ($versions > $show) {
-            $diff = $versions - $show;
-            echo "<div class='span12'>$diff more versions available</div><div class='clear'></div><hr/>";
-        }
+                $vars = array(
+                    'entity' => $entity,
+                    't' => $t,
+                    'member_name' => $member_name,
+                    'PluralRules' => $PluralRules
+                );
+                $versionHtml = $this->renderPhpToString('versions.php', $vars);
+                echo $versionHtml;
+            }
+            if ($versions > $show) {
+                $diff = $versions - $show;
+                echo "<div class='span12'>$diff more versions available</div><div class='clear'></div><hr/>";
+            }
         } else {
 
         }
@@ -235,36 +254,36 @@ class AjaxController extends BaseController
         if ($cnt) {
             $website = route('ajaxsuggestions', array('project' => $projectId,
                 'language' => $language,
-            'file' => $file,
-            'ofile' => $oFile,
-            'context' => $originalString,
-        ));
+                'file' => $file,
+                'ofile' => $oFile,
+                'context' => $originalString,
+            ));
             $pagination = new CSSPagination($cnt, 1, $website, 'ajaxPage');
             $pagination->setPage($page);
             $suggestion = Suggestion::where('project_id', '=', $projectId)
                 ->where('file_id', '=', $file)
-            ->where('original_file', '=', $oFile)
-            ->where('language', '=', $language)
-            ->where('context', '=', $originalString)
-            ->take(1)
-            ->skip($pagination->getLimit())
-            ->get();
-        $suggestion = $suggestion[0];
+                ->where('original_file', '=', $oFile)
+                ->where('language', '=', $language)
+                ->where('context', '=', $originalString)
+                ->take(1)
+                ->skip($pagination->getLimit())
+                ->get();
+            $suggestion = $suggestion[0];
             $user = User::find($suggestion->user_id);
             $PluralRules = WtsHelper::getRule($language);
-        if (!$PluralRules) {
-            $lang = substr($language, 0, 2);
-            $PluralRules = WtsHelper::getRule($lang);
-        }
-        echo $pagination->showPage();
-        $vars = array(
-            'entity' => $originalString,
-            't' => $suggestion,
-            'member_name' => $user->name,
-            'PluralRules' => $PluralRules
-        );
-        $versionHtml = renderPhpToString('widgets/versions.php', $vars);
-        echo $versionHtml;
+            if (!$PluralRules) {
+                $lang = substr($language, 0, 2);
+                $PluralRules = WtsHelper::getRule($lang);
+            }
+            echo $pagination->showPage();
+            $vars = array(
+                'entity' => $originalString,
+                't' => $suggestion,
+                'member_name' => $user->name,
+                'PluralRules' => $PluralRules
+            );
+            $versionHtml = renderPhpToString('widgets/versions.php', $vars);
+            echo $versionHtml;
         } else {
             echo "No previous version";
         }

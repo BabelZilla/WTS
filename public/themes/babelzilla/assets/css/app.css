@@ -1096,3 +1096,66 @@ h3.wtstitle {
 .xdsoft_scroller_box {
     position: relative;
 }
+
+.fs_transvision label {
+    font-size: 0.85rem;
+}
+
+.fs_transvision legend {
+    font-size: 0.95rem;
+}
+
+.fs_transvision {
+    border: none;
+}
+
+.tranvisiongrid {
+    border: 1px solid #dddddd;
+    margin: 0px;
+}
+
+/* colors for results */
+
+table tr td:first-child {
+    color: #3C8FD1;
+}
+
+.resred {
+    color: rgb(200, 0, 0);
+}
+
+.resgreen {
+    color: rgb(0, 200, 0);
+}
+
+.resblue {
+    color: rgb(0, 0, 200);
+}
+
+.highlight {
+    /* generic highlight */
+    color: black;
+    background-color: rgba(255, 165, 0, 0.77);
+    border-radius: 3px;
+}
+
+.highlight-gray {
+    color: black;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.highlight-red {
+    color: black;
+    background-color: rgba(255, 0, 0, 0.4);
+}
+
+.superset {
+    color: gray;
+    font-size: 80%;
+}
+
+.resentity {
+    font-size: 0.7rem;
+    word-wrap: break-word;
+    white-space: pre-line;
+}
