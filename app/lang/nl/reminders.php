@@ -17,8 +17,8 @@ return array(
 
     "user" => "Geen gebruiker bekend met dat e-mailadres.",
 
-    "token" => "Dit wachtwoord reset token is niet geldig.",
+    "token" => "Dit wachtwoordherinitialisatietoken is niet geldig.",
 
-    "sent" => "Wachtwoord herinnering verzonden!",
+    "sent" => "Wachtwoordherinnering verzonden!",
 
 );
