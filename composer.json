@@ -23,7 +23,8 @@
         "atticmedia/anvard": "dev-master",
         "cviebrock/eloquent-sluggable": "2.*",
         "orangehill/iseed": "dev-master",
-        "barryvdh/laravel-translation-manager": "dev-master"
+        "barryvdh/laravel-translation-manager": "dev-master",
+        "edvinaskrucas/notification": "dev-master"
     },
     "autoload": {
         "classmap": [

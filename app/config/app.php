@@ -115,7 +115,8 @@ return array(
         'Illuminate\Auth\Reminders\ReminderServiceProvider',
         'Illuminate\Database\SeedServiceProvider',
         'Illuminate\Session\SessionServiceProvider',
-        'Illuminate\Translation\TranslationServiceProvider',
+        //'Illuminate\Translation\TranslationServiceProvider',
+        'Barryvdh\TranslationManager\TranslationServiceProvider',
         'Illuminate\Validation\ValidationServiceProvider',
         'Illuminate\View\ViewServiceProvider',
         'Illuminate\Workbench\WorkbenchServiceProvider',
@@ -124,11 +125,12 @@ return array(
         'Zizaco\Confide\ConfideServiceProvider',
         'Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider',
         'Adamkearsley\ConvertMigrations\ConvertMigrationsServiceProvider',
-        'Artdarek\OAuth\OAuthServiceProvider',
         'Fbf\LaravelComments\LaravelCommentsServiceProvider',
         'Atticmedia\Anvard\AnvardServiceProvider',
         'Cviebrock\EloquentSluggable\SluggableServiceProvider',
         'Orangehill\Iseed\IseedServiceProvider',
+        'Barryvdh\TranslationManager\ManagerServiceProvider',
+        'Krucas\Notification\NotificationServiceProvider',
     ),
 
     /*
@@ -197,7 +199,7 @@ return array(
         'Theme' => 'Teepluss\Theme\Facades\Theme',
         'Confide' => 'Zizaco\Confide\ConfideFacade',
         'Gravatar' => 'Thomaswelton\LaravelGravatar\Facades\Gravatar',
-        'OAuth' => 'Artdarek\OAuth\Facade\OAuth'
+        'Notification' => 'Krucas\Notification\Facades\Notification',
     ),
 
 );

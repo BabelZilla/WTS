@@ -10,6 +10,8 @@ $countprojects = Project::all()->count();
     <meta charset="utf-8">
     <meta name="keywords" content="{{ Theme::get('keywords') }}">
     <meta name="description" content="{{ Theme::get('description') }}">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="favicon.png">
     {{ Theme::asset()->styles() }}
     {{ Theme::asset()->scripts() }}
 </head>

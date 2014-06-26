@@ -4,7 +4,8 @@
             <li class="name">
                 <h1>
                     <a href="<?php echo route('home') ?>">
-                        <img src="<?php echo asset('themes/babelzilla/assets/img/globe100px.png'); ?>"> BabelZilla
+                        <img src="<?php echo asset('themes/babelzilla/assets/img/globe-60.png'); ?>" width='48'
+                             height='48'> BabelZilla
                     </a>
                 </h1>
             </li>
@@ -46,16 +47,18 @@
                         <input type="text" placeholder="{{ Trans('wts.searchplaceholder') }}">
                     </div>
                     <div class="large-4 columns">
-                        <a href="#" class="button expand">{{ Trans('wts.search') }}</a>
+                        <a href="#" class="button expand" style="margin-top: 3px">{{ Trans('wts.search') }}</a>
                     </div>
                 </li>
                 <?php if (!Auth::check()) { ?>
-                    <li style="margin-right: 5px;"><a class="button" data-dropdown="loginDrop" data-options="align:left"
-                                                      href="#">{{ Trans('wts.login_signup') }}</a></li>
+                    <li style="margin-right: 15px; margin-top: 7px"><a class="button" data-dropdown="loginDrop"
+                                                                       data-options="align:left"
+                                                                       href="#">{{ Trans('wts.login_signup') }}</a></li>
                     <div class="f-dropdown content medium" data-dropdown-content="" id="loginDrop">
-
-                        <form method="POST" action="<?php echo route('login'); ?>" accept-charset="UTF-8">
-                            <input type="hidden" name="_token" value="Sf1d8Vler1fqFpzYHTIBovRLTV4PDS6XmMtUreP5">
+                        <form method="POST"
+                              action="{{{ Confide::checkAction('UserController@do_login') ?: URL::to('/user/login') }}}"
+                              accept-charset="UTF-8">
+                            <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                             <fieldset>
                                 <div class="form-group">
                                     <label for="email">Username or Email</label>
@@ -80,11 +83,13 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button tabindex="3" type="submit" class="btn btn-default">Login</button>
+                                    <button class="button" type="submit" tabindex="3">Login</button>
+
+                                    <p class="text-center"><a href="{{ route('registeruser') }}">{{{
+                                            Lang::get('confide.login.create_account') }}}</a></p>
                                 </div>
                             </fieldset>
                         </form>
-
                     </div>
                 <?php } else { ?>
                     <li class="divider"></li>

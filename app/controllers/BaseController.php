@@ -12,9 +12,16 @@ class BaseController extends Controller
         if (Auth::Check()) {
             $this->user = Auth::User();
             $this->usersettings = unserialize($this->user->settings);
+        } else {
+            $this->usersettings = Config::Get('user.usersettings');
         }
-        $lang = WtsHelper::getLanguage(Config::Get('wts.appLanguages'));
-        if ($lang) App::setLocale($lang);
+        if (Auth::guest()) {
+            $lang = WtsHelper::getLanguage(Config::Get('wts.appLanguages'));
+            if ($lang) $this->usersettings['locale'] = $lang;
+        }
+
+        App::setLocale($this->usersettings['locale']);
+
         $this->theme = Theme::uses('babelzilla')->layout('default');
         $this->theme->asset()->container('footer')->add('modernizr_js', 'themes/babelzilla/assets/js/vendor/modernizr.js');
         $this->theme->asset()->container('footer')->add('jquery_js', 'themes/babelzilla/assets/js/vendor/jquery.js');
