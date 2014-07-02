@@ -34,9 +34,7 @@
             "app/database/migrations",
             "app/database/seeds",
             "app/tests/TestCase.php",
-            "app/classes",
-            "app/exceptions.php"
-        ]
+            "app/classes"        ]
     },
     "scripts": {
         "post-install-cmd": [

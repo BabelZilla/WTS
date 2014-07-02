@@ -90,7 +90,7 @@ Route::any('transvision', array('as' => 'transvision', 'uses' => 'TransvisionCon
 Route::group(array('before' => 'auth'), function () {
     Route::controller('translations', 'Barryvdh\TranslationManager\Controller');
 });
-
+Route::any('install', 'InstallController@run');
 // 404 Page
 /*App::missing(function ($exception) {
     return Response::view('site.error.404', array(), 404);

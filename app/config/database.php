@@ -55,9 +55,9 @@ return array(
         'mysql' => array(
             'driver' => 'mysql',
             'host' => 'localhost',
-            'database' => '4_litest',
-            'username' => '4_wts',
-            'password' => 'Xs#u7Llx8L',
+            'database' => '4_devel',
+            'username' => '4_wtsdev',
+            'password' => '3uSNG24Ug2dBzUp',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
