@@ -1,4 +1,3 @@
 ## BabelZilla WTS
 
-Work in progress
-
+[Installation instructions in the Wiki](https://github.com/BabelZilla/WTS/wiki)
