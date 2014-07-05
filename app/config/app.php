@@ -131,6 +131,7 @@ return array(
         'Orangehill\Iseed\IseedServiceProvider',
         'Barryvdh\TranslationManager\ManagerServiceProvider',
         'Krucas\Notification\NotificationServiceProvider',
+        'Zizaco\Entrust\EntrustServiceProvider',
     ),
 
     /*
@@ -200,6 +201,7 @@ return array(
         'Confide' => 'Zizaco\Confide\ConfideFacade',
         'Gravatar' => 'Thomaswelton\LaravelGravatar\Facades\Gravatar',
         'Notification' => 'Krucas\Notification\Facades\Notification',
+        'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
     ),
 
 );
