@@ -11,6 +11,7 @@ The **Web Translation System** (WTS) is software that powers the localization an
 	1. mbstring
 	1. openssl (used by Composer, below)
 1. [PHP Composer](https://getcomposer.org/) - [see download instructions here](https://getcomposer.org/download/)
+
 ## Installation
 
 1. Clone the repository:  
@@ -25,6 +26,7 @@ The **Web Translation System** (WTS) is software that powers the localization an
 
 	Your folder structure should now be similar to the one below:
 
+	```
 	|-htdocs  
 	|-wts  
 	|---app  
@@ -47,25 +49,25 @@ The **Web Translation System** (WTS) is software that powers the localization an
 	|-----themes  
 	|-------babelzilla  
 	|-------installer  
-	|---vendor  
+	|---vendor
+	```
 
-**Things that needs to be done before you start the installer:**
+1. Change permissions on the `app/config` and `app/storage` folders so your webserver has write access
+1. Copy the contents of the `public` folder to your webroot (e.g. `htdocs`. You can change this in `bootstrap/paths.php`)
+1. Create the following folders (webserver needs write access to these also)
 
-1. Change permissions of the storage & config folder (webserver needs write access)     
-1. Copy the content of the public folder to your webroot (e.g. htdocs, you can change this in bootstrap/path.php)     
-1. Create the following folders (webserver needs write access)    
-
+	```
 	|-upload    
 	|---temp    
 	|-uploads    
 	|---projects     
 	|---repos    
+	```
 
-You can change the paths in config/wts.php     
+	You can change the paths in `app/config/wts.php`.  
+	**If you prefer another folder structure:** change the paths in `public/index.php`.
 
-**If you prefer another folder structure:** change the paths in `index.php`.
-
-Now you're ready to run the install script: http://www.yourdomain.com/install    
+1. Run the install script: http://www.yourdomain.com/install    
 
 
 
