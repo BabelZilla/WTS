@@ -2,6 +2,15 @@
 
 The **Web Translation System** (WTS) is software that powers the localization and translation site [babelzilla.org](http://www.babelzilla.org). WTS allows Mozilla extension authors to upload their localized extensions for translation into other languages, and allows volunteer translators to view, edit, and update translations.
 
+## Requirements
+
+1. [MySQL](https://www.mysql.com/)
+1. [PHP](http://php.net/)
+1. The following PHP extensions must be installed and enabled in `php.ini`:
+	1. curl
+	1. mbstring
+	1. openssl (used by Composer, below)
+1. [PHP Composer](https://getcomposer.org/) - [see download instructions here](https://getcomposer.org/download/)
 ## Installation
 
 1. Clone the repository:  
