@@ -8,6 +8,7 @@ class InstallController extends \BaseController
     {
         parent::__construct();
         $this->theme = Theme::uses('installer')->layout('default');
+
     }
 
     protected $step;
@@ -108,6 +109,7 @@ class InstallController extends \BaseController
         }
         $config = config::get('database');
         $config['default'] = 'mysql';
+        $config['migrations'] = 'migrations';
         $config['connections']['mysql'] = $db_conf;
 
         $confDump = '<?php' . "\n\n" . 'return ' . var_export($config, true) . ';' . "\n";
@@ -159,7 +161,7 @@ class InstallController extends \BaseController
         $sendmailpath = Input::get('sendmailpath', '/usr/sbin/sendmail -bs');
 
         $config = config::get('mail');
-        $config['driver'] = 'sendmail';
+        $config['driver'] = 'mail';
         $from = array('address' => $sendermail, 'name' => $sendername);
         $config['from'] = $from;
         $config['sendmail'] = $sendmailpath;
@@ -213,7 +215,7 @@ class InstallController extends \BaseController
             'description' => Input::get('description'),
         );
 
-        $this->remember('board', $board_info);
+        /* TODO: Save the information */
 
         return $this->redirectTo('success');
     }
