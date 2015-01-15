@@ -18,13 +18,13 @@
             @if(!$configWritable)
             <span style="color: red;">{{ 'Config directory is not writable' }}</span>
             @endif
-            @if(!tempWritable)
+            @if(!$tempWritable)
             <span style="color: red;">{{ 'Temp directory is not writable' }}</span>
             @endif
-            @if(!repoWritable)
+            @if(!$repoWritable)
             <span style="color: red;">{{ 'Repo directory is not writable' }}</span>
             @endif
-            @if(!uploadWritable)
+            @if(!$uploadWritable)
             <span style="color: red;">{{ 'Upload directory is not writable' }}</span>
             @endif
             <span class="text-center">
