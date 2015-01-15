@@ -53,8 +53,8 @@ The **Web Translation System** (WTS) is software that powers the localization an
 	```
 
 1. Change permissions on the `app/config` and `app/storage` folders so your webserver has write access
-1. Copy the contents of the `public` folder to your webroot (e.g. `htdocs`. You can change this in `bootstrap/paths.php`)
-1. Create the following folders (webserver needs write access to these also)
+1. Copy the *contents* of the `public` folder to your webroot - i.e. copy all of the files inside `public`, but not the `public` folder itself. (e.g. `htdocs`. You can change this in `bootstrap/paths.php`). The files should sit in the base webroot directory - e.g. `htdocs/index.php`.
+1. At the same level as your base webroot folder (e.g. `htdocs`) create the following folders:
 
 	```
 	|-upload    
@@ -62,6 +62,40 @@ The **Web Translation System** (WTS) is software that powers the localization an
 	|-uploads    
 	|---projects     
 	|---repos    
+	```
+	Your webserver will need write access to these folders also.
+
+	Your folder structure should now look like this:
+
+	```
+	|-htdocs  
+	|-wts  
+	|---app  
+	|-----classes  
+	|-----cldr_cache  
+	|-----commands  
+	|-----config  
+	|-----controllers  
+	|-----database  
+	|-----lang  
+	|-----models  
+	|-----other  
+	|-----start  
+	|-----storage  
+	|-----tests  
+	|-----views  
+	|---bootstrap  
+	|---public  
+	|-----packages  
+	|-----themes  
+	|-------babelzilla  
+	|-------installer    
+	|---vendor
+	|-upload    
+	|---temp    
+	|-uploads    
+	|---projects     
+	|---repos  
 	```
 
 	You can change the paths in `app/config/wts.php`.  
