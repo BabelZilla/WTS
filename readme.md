@@ -14,7 +14,12 @@ The **Web Translation System** (WTS) is software that powers the localization an
 
 ## Installation
 
-1. Clone the repository:  
+1. If you haven't already, install and configure MySQL on your system. You should create a user account that will have read and write access to your database.
+
+1. Create a MySQL database for WTS to use. You can do this on the command line - e.g.:
+	`mysql -u admin -p -e "create database wts_db;"`
+
+1. Clone the WTS code repository:  
 	`git clone https://github.com/BabelZilla/WTS.git wts/`
 
 1. Open the wts directory in a terminal:  
@@ -102,6 +107,7 @@ The **Web Translation System** (WTS) is software that powers the localization an
 	**If you prefer another folder structure:** change the paths in `public/index.php`.
 
 1. Run the install script: http://www.yourdomain.com/install    
+
 
 
 
