@@ -106,8 +106,11 @@ The **Web Translation System** (WTS) is software that powers the localization an
 	You can change the paths in `app/config/wts.php`.  
 	**If you prefer another folder structure:** change the paths in `public/index.php`.
 
-1. Run the install script: http://www.yourdomain.com/install    
+1. Run the install script by visiting the following URL: http://www.yourdomain.com/install . The WTS system will redirect you to the start of the installation pages.
+	1. You should see a page that says "Welcome to the WTS Installer!".
+	1. Click the "Install from scratch" or "Upgrade" buttons and follow the instructions.
 
+	**Troubleshooting:** If you get a blank page or a 404 error after visiting the URL, something is wrong. Check to see if your web server is set to allow redirects; if not this will interfere with WTS installation.
 
 
 
