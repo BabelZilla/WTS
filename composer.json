@@ -4,12 +4,12 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "laravel/framework": "4.1.*",
-        "teepluss/theme": "dev-master",
-        "frozennode/administrator": "dev-master",
-        "laravelbook/ardent": "dev-master",
+        "laravel/framework": "4.2.9",
+        "teepluss/theme": "1.2.1",
+        "frozennode/administrator": "4.*",
+        "laravelbook/ardent": "dev-master#8ac1128e98d930ca34c6e6cd652961fa77653eaf as 2.4.0",
         "zizaco/confide": "3.2.3",
-        "thomaswelton/laravel-gravatar": "dev-master",
+        "thomaswelton/laravel-gravatar": "0.1.0",
         "knplabs/github-api": "1.3.*@dev",
         "gitonomy/gitlib": "dev-master",
         "mpratt/relativetime": "dev-master",
@@ -18,14 +18,14 @@
         "adamkearsley/convert-migrations": "dev-master",
         "thujohn/rss": "dev-master",
         "easybook/geshi": "dev-master",
-        "dflydev/markdown": "1.0.*@dev",
+        "michelf/php-markdown": "1.5.0",
         "fbf/laravel-comments": "dev-master",
         "atticmedia/anvard": "dev-master",
         "cviebrock/eloquent-sluggable": "2.*",
-        "orangehill/iseed": "dev-master",
-        "barryvdh/laravel-translation-manager": "dev-master",
-        "edvinaskrucas/notification": "dev-master",
-        "zizaco/entrust": "dev-master"
+        "orangehill/iseed": "1.1",
+        "barryvdh/laravel-translation-manager": "0.1.x",
+        "edvinaskrucas/notification": "3.0.1",
+        "zizaco/entrust": "1.3.0"
     },
     "autoload": {
         "classmap": [
@@ -40,11 +40,13 @@
     "scripts": {
         "post-install-cmd": [
             "php artisan clear-compiled",
-            "php artisan optimize"
+            "php artisan optimize",
+            "php artisan asset:publish frozennode/administrator"
         ],
         "post-update-cmd": [
             "php artisan clear-compiled",
-            "php artisan optimize"
+            "php artisan optimize",
+            "php artisan asset:publish frozennode/administrator"
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"
@@ -53,5 +55,6 @@
     "config": {
         "preferred-install": "dist"
     },
+    "prefer-stable": true,
     "minimum-stability": "stable"
 }
