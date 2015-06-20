@@ -15,18 +15,23 @@
                 <a class="button tiny radius disabled" href="">Upgrade</a>
             </div>
         @else
-            @if(!$configWritable)
-            <span style="color: red;">{{ 'Config directory is not writable' }}</span>
-            @endif
-            @if(!$tempWritable)
-            <span style="color: red;">{{ 'Temp directory is not writable' }}</span>
-            @endif
-            @if(!$repoWritable)
-            <span style="color: red;">{{ 'Repo directory is not writable' }}</span>
-            @endif
-            @if(!$uploadWritable)
-            <span style="color: red;">{{ 'Upload directory is not writable' }}</span>
-            @endif
+            <span>
+                <p>There were errors setting up the application:</p>
+            </span>
+            <ul>
+                @if(!$configWritable)
+                <li><span style="color: red;">{{ "Config directory '$configFolder' is not writable." }}</span></li>
+                @endif
+                @if(!$tempWritable)
+                <li><span style="color: red;">{{ "Temp directory '$tempFolder' is not writable." }}</span></li>
+                @endif
+                @if(!$repoWritable)
+                <li><span style="color: red;">{{ "Repo directory '$repoFolder' is not writable." }}</span></li>
+                @endif
+                @if(!$uploadWritable)
+                <li><span style="color: red;">{{ "Upload directory '$uploadFolder' is not writable." }}</span></li>
+                @endif
+            </ul>
             <span class="text-center">
                 <h5>Please fix the problems above and reload this page.</h5>
             </span>

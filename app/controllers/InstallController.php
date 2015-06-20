@@ -39,7 +39,8 @@ class InstallController extends \BaseController
         $uploadFolder = Config::Get('wts.uploadFolder');
         $tempFolder = Config::Get('wts.tempFolder');
         $repoFolder = Config::Get('wts.repoFolder');
-        $configWritable = File::isWritable(app_path() . '/config/');
+        $configFolder = app_path() . '/config/';
+        $configWritable = File::isWritable($configFolder);
         $tempWritable = File::isWritable($tempFolder);
         $repoWritable = File::isWritable($repoFolder);
         $uploadWritable = File::isWritable($uploadFolder);
@@ -47,9 +48,13 @@ class InstallController extends \BaseController
 
         $view = array(
             'configWritable' => $configWritable,
-            'tempWritable' => $tempFolder,
-            'repoWritable' => $repoFolder,
+            'tempWritable' => $tempWritable,
+            'repoWritable' => $repoWritable,
             'uploadWritable' => $uploadWritable,
+            'configFolder' => $configFolder,
+            'tempFolder' => $tempFolder,
+            'repoFolder' => $repoFolder,
+            'uploadFolder' => $uploadFolder,
             'noerror' => $noerror,
         );
         return $this->theme->of('installer.start', $view)->render();
